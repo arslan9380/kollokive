@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "289358246981",
-    "project_id": "tajeer-21315",
-    "storage_bucket": "tajeer-21315.appspot.com"
+    "project_number": "565155212665",
+    "project_id": "kollokive",
+    "storage_bucket": "kollokive.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:289358246981:android:4ca1bdbc57b0249ddc9f2c",
+        "mobilesdk_app_id": "1:565155212665:android:5b9b4e29aedc4bcdee13a8",
         "android_client_info": {
-          "package_name": "com.ar.tajeer"
+          "package_name": "com.ar.kollokive"
         }
       },
       "oauth_client": [
         {
-          "client_id": "289358246981-ijvk8tcn33k4pu4rhp8klqm9riuma8mn.apps.googleusercontent.com",
+          "client_id": "565155212665-k6390ue4dke4ne8eq1hsafbae8tgnuc5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5UO1V6HZglAMXHb8i2XihUBk3NldAOv8"
+          "current_key": "AIzaSyD7mpcxxYZdeeJrPIOvPtN8pQ-YG_bQD3w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "289358246981-ijvk8tcn33k4pu4rhp8klqm9riuma8mn.apps.googleusercontent.com",
+              "client_id": "565155212665-k6390ue4dke4ne8eq1hsafbae8tgnuc5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

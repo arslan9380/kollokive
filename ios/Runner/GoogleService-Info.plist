@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>628455438335-884t07eqdpqmi3jclesei191b37vtrp4.apps.googleusercontent.com</string>
+	<string>289358246981-6hrus40rg60ghajpu95bri77lrt8alf4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.628455438335-884t07eqdpqmi3jclesei191b37vtrp4</string>
+	<string>com.googleusercontent.apps.289358246981-6hrus40rg60ghajpu95bri77lrt8alf4</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBP6p7U-93oErnXJGJ2f158boK4mhlihTM</string>
+	<string>AIzaSyANB5liri-RYsIf23KSiT6xCMAGaPipJms</string>
 	<key>GCM_SENDER_ID</key>
-	<string>628455438335</string>
+	<string>289358246981</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ar.event</string>
+	<string>com.ar.tajeer</string>
 	<key>PROJECT_ID</key>
-	<string>event-app-887e0</string>
+	<string>tajeer-21315</string>
 	<key>STORAGE_BUCKET</key>
-	<string>event-app-887e0.appspot.com</string>
+	<string>tajeer-21315.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:628455438335:ios:dbc2f4adfd6ee38cdcd9ca</string>
+	<string>1:289358246981:ios:ecf022d2c56effdfdc9f2c</string>
 </dict>
 </plist>

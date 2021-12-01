@@ -61,7 +61,11 @@ class ProfileView extends StatelessWidget {
               body: model.loading
                   ? Center(child: CircularProgressIndicator())
                   : model.msg != ""
-                      ? Text(model.msg)
+                      ? Center(
+                          child: Text(
+                          model.msg,
+                          textAlign: TextAlign.center,
+                        ))
                       : Container(
                           margin: EdgeInsets.symmetric(horizontal: hMargin),
                           child: DefaultTabController(

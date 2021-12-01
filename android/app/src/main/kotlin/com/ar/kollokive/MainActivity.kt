@@ -1,4 +1,4 @@
-package com.ar.tajeer
+package com.ar.kollokive
 
 import io.flutter.embedding.android.FlutterActivity
 

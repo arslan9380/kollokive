@@ -146,27 +146,23 @@ class _AddItemViewState extends State<AddItemView> {
                                     horizontal: 4,
                                     vertical: 8,
                                   ),
-                                  child: Scrollbar(
-                                    isAlwaysShown: true,
-                                    thickness: 8,
-                                    child: ListView.builder(
-                                        itemCount: model.itemCats.length,
-                                        physics: BouncingScrollPhysics(),
-                                        shrinkWrap: true,
-                                        padding: EdgeInsets.only(right: 16),
-                                        itemBuilder: (_, index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              model.setEventType(
-                                                  model.itemCats[index]);
-                                            },
-                                            child: ExpandOptionWidget(
-                                              title: model.itemCats[index],
-                                              selectedValue: model.selectedCat,
-                                            ),
-                                          );
-                                        }),
-                                  ),
+                                  child: ListView.builder(
+                                      itemCount: model.itemCats.length,
+                                      physics: BouncingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.only(right: 16),
+                                      itemBuilder: (_, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            model.setEventType(
+                                                model.itemCats[index]);
+                                          },
+                                          child: ExpandOptionWidget(
+                                            title: model.itemCats[index],
+                                            selectedValue: model.selectedCat,
+                                          ),
+                                        );
+                                      }),
                                 ),
                               ),
                             ),
@@ -180,14 +176,10 @@ class _AddItemViewState extends State<AddItemView> {
                                 border:
                                     Border.all(width: 1.0, color: Colors.grey),
                               ),
-                              child: RawScrollbar(
-                                thumbColor: Theme.of(context).primaryColor,
-                                isAlwaysShown: true,
-                                child: DescriptionField(
-                                  hint: "Description",
-                                  controller: descriptionCon,
-                                  maxLines: 1000,
-                                ),
+                              child: DescriptionField(
+                                hint: "Description",
+                                controller: descriptionCon,
+                                maxLines: 1000,
                               ),
                             ),
                             SizedBox(

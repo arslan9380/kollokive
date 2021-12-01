@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/view/ui/add_item/add_item.dart';
 import 'package:tajeer/view/ui/drawer/drawer_view.dart';
 import 'package:tajeer/view/ui/home/home_view.dart';
 import 'package:tajeer/view/ui/messages/message_view.dart';
@@ -63,9 +61,7 @@ class UserHomeView extends StatelessWidget {
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,
               floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  Get.to(() => AddItemView());
-                },
+                onPressed: model.addItem,
                 backgroundColor: Theme.of(context).primaryColorDark,
                 elevation: 0.0,
                 child: Icon(

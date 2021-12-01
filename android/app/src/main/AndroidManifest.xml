@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ar.tajeer">
+    package="com.ar.kollokive">
    <application
         android:label="Tajeer"
         android:icon="@mipmap/launcher_icon">
