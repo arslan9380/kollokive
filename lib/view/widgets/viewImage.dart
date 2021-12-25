@@ -38,10 +38,15 @@ class _ViewImageState extends State<ViewImage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                      margin: EdgeInsets.only(left: 12, top: 12, bottom: 12),
-                      child:
-                          IconButtonWidget(icon: Icons.arrow_back_ios_sharp)),
+                  InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(left: 12, top: 12, bottom: 12),
+                        child:
+                            IconButtonWidget(icon: Icons.arrow_back_ios_sharp)),
+                  ),
                 ],
               ),
             ],

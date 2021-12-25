@@ -3,13 +3,14 @@ import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tajeer/services/auth_service.dart';
 import 'package:tajeer/services/common_ui_service.dart';
+import 'package:tajeer/services/friend_service.dart';
+import 'package:tajeer/services/group_chat_service.dart';
 import 'package:tajeer/services/image_service.dart';
-import 'package:tajeer/services/item_service.dart';
-import 'package:tajeer/services/offer_service.dart';
-import 'package:tajeer/services/rating_service.dart';
-import 'package:tajeer/services/wishlist_service.dart';
+import 'package:tajeer/services/post_service.dart';
+import 'package:tajeer/view/ui/friends/friends_viewmodel.dart';
 import 'package:tajeer/view/ui/home/home_viewmodel.dart';
-import 'package:tajeer/view/ui/wishlist/wishlist_viewmodel.dart';
+import 'package:tajeer/view/ui/notifications/notifications_viewmodel.dart';
+import 'package:tajeer/view/ui/signup/signup_viewmodel.dart';
 
 final locator = GetIt.instance;
 
@@ -18,12 +19,13 @@ void setupLocator() {
   locator.registerLazySingleton(() => CommonUiService());
   locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => AuthService());
-  locator.registerLazySingleton(() => ItemService());
+  locator.registerLazySingleton(() => PostService());
   locator.registerLazySingleton(() => ImageService());
-  locator.registerLazySingleton(() => WishlistService());
-  locator.registerLazySingleton(() => OfferService());
-  locator.registerLazySingleton(() => RatingService());
+  locator.registerLazySingleton(() => FriendService());
+  locator.registerLazySingleton(() => GroupChatService());
 
   locator.registerSingleton<HomeViewModel>(HomeViewModel());
-  locator.registerSingleton<WishlistViewModel>(WishlistViewModel());
+  locator.registerSingleton<NotificationsViewModel>(NotificationsViewModel());
+  locator.registerSingleton<SignUpViewModel>(SignUpViewModel());
+  locator.registerSingleton<FriendsViewModel>(FriendsViewModel());
 }

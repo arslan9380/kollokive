@@ -12,12 +12,13 @@ class SplashView extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Column(
           children: [
-            // Image.asset("assets/top_image.png"),
             Spacer(),
             Container(
-                margin: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
-                child:
-                    Hero(tag: "logo", child: Image.asset("assets/logo.png"))),
+                margin: EdgeInsets.symmetric(horizontal: Get.width * 0.2),
+                child: Image.asset(
+                  "assets/logo.png",
+                  color: Theme.of(context).primaryColor,
+                )),
             Spacer(),
           ],
         ),

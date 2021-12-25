@@ -6,16 +6,19 @@ class Message {
   bool image;
   String url;
   String senderImageUrl;
+  dynamic serverTime;
 
-  Message(
-      {@required this.msgId,
-      @required this.msgBody,
-      @required this.senderUid,
-      @required this.receiverUid,
-      @required this.usersUidsMerge,
-      @required this.image,
-      @required this.url,
-      @required this.senderImageUrl});
+  Message({
+    @required this.msgId,
+    @required this.msgBody,
+    @required this.senderUid,
+    @required this.receiverUid,
+    @required this.usersUidsMerge,
+    @required this.image,
+    @required this.url,
+    @required this.senderImageUrl,
+    this.serverTime,
+  });
 
   factory Message.fromMap(Map<String, dynamic> map) {
     return new Message(
@@ -26,7 +29,8 @@ class Message {
         usersUidsMerge: map['usersUidsMerge'] as String,
         image: map['image'] as bool,
         senderImageUrl: map['senderImageUrl'],
-        url: map['url'] as String);
+        url: map['url'] as String,
+        serverTime: map['serverTime']);
   }
 
   Map<String, dynamic> toMap() {
@@ -38,7 +42,8 @@ class Message {
       'usersUidsMerge': this.usersUidsMerge,
       'image': this.image,
       'url': this.url,
-      'senderImageUrl': this.senderImageUrl
+      'senderImageUrl': this.senderImageUrl,
+      'serverTime': this.serverTime,
     };
   }
 

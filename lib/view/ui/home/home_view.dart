@@ -1,126 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tajeer/app/constants.dart';
 import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/view/widgets/inputfield_widget.dart';
-import 'package:tajeer/view/widgets/item_widget.dart';
-import 'package:tajeer/view/widgets/no_event_widget.dart';
+import 'package:tajeer/view/ui/home/home_viewmodel.dart';
+import 'package:tajeer/view/widgets/post_box.dart';
 
-import 'home_viewmodel.dart';
-
-class HomeView extends StatefulWidget {
-  @override
-  _HomeViewState createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
-  TextEditingController searchCon = TextEditingController();
-  ScrollController _itemController = ScrollController();
-
+class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      viewModelBuilder: () => locator<HomeViewModel>(),
-      builder: (context, model, child) => Scaffold(
-        backgroundColor: Colors.white,
-        body: model.loading
-            ? Center(child: CircularProgressIndicator())
-            : ModalProgressHUD(
-                inAsyncCall: model.isProcessing,
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: hMargin, vertical: vMargin),
-                  child: Column(
-                    children: [
-                      InputFieldWidget(
-                        controller: searchCon,
-                        prefixIcon: Icons.search,
-                        hint: "Search Item",
-                        onChange: model.onFilter,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: 20,
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: model.itemCats.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (_, index) {
-                              return InkWell(
-                                onTap: () {
-                                  model.setCat(model.itemCats[index]);
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(right: 16),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    model.itemCats[index],
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: model.selectedCat ==
-                                                model.itemCats[index]
-                                            ? Theme.of(context).primaryColorDark
-                                            : Theme.of(context).primaryColor,
-                                        fontSize: model.selectedCat ==
-                                                model.itemCats[index]
-                                            ? 18
-                                            : 14,
-                                        fontFamily: model.selectedCat ==
-                                                model.itemCats[index]
-                                            ? GoogleFonts.aclonica().fontFamily
-                                            : GoogleFonts.openSans().fontFamily,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      model.filteredItems.length == 0
-                          ? Expanded(
-                              child: SingleChildScrollView(
-                                  child: NoEventWidget(false)))
-                          : Expanded(
-                              child: RawScrollbar(
-                                thumbColor: Theme.of(context).primaryColor,
-                                isAlwaysShown: true,
-                                controller: _itemController,
-                                child: SingleChildScrollView(
-                                  controller: _itemController,
-                                  physics: BouncingScrollPhysics(),
-                                  child: ListView.builder(
-                                      itemCount: model.filteredItems.length,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      padding: EdgeInsets.all(5),
-                                      itemBuilder: (_, index) {
-                                        return InkWell(
-                                            onTap: () {},
-                                            child: ItemWidget(
-                                              itemModel:
-                                                  model.filteredItems[index],
-                                            ));
-                                      }),
-                                ),
-                              ),
+        viewModelBuilder: () => locator<HomeViewModel>(),
+        disposeViewModel: false,
+        createNewModelOnInsert: true,
+        initialiseSpecialViewModelsOnce: true,
+        fireOnModelReadyOnce: true,
+        onModelReady: (model) => SchedulerBinding.instance
+            .addPostFrameCallback((_) => model.getData()),
+        builder: (context, model, child) => Scaffold(
+              body: model.loading
+                  ? Center(child: CircularProgressIndicator())
+                  : model.msg != ""
+                      ? Center(
+                          child: Text(
+                          model.msg,
+                          textAlign: TextAlign.center,
+                        ))
+                      : SingleChildScrollView(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: hMargin, vertical: vMargin),
+                            child: Column(
+                              children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: model.allPost.length,
+                                    itemBuilder: (_, index) {
+                                      return PostBox(
+                                        model.allPost[index],
+                                        model.allPost[index].id,
+                                        model: model,
+                                      );
+                                    })
+                              ],
                             ),
-                    ],
-                  ),
-                ),
-              ),
-      ),
-      disposeViewModel: false,
-      initialiseSpecialViewModelsOnce: true,
-      fireOnModelReadyOnce: true,
-      onModelReady: (model) => SchedulerBinding.instance
-          .addPostFrameCallback((_) => model.initialise()),
-    );
+                          ),
+                        ),
+            ));
   }
 }

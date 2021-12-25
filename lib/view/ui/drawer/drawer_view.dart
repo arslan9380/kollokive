@@ -1,10 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tajeer/view/ui/edit_profile/edit_profile_view.dart';
-import 'package:tajeer/view/ui/offers/offers_view.dart';
-import 'package:tajeer/view/ui/past_owners/past_owners_view.dart';
-import 'package:tajeer/view/ui/past_renters/past_renters_view.dart';
 import 'package:tajeer/view/widgets/drawer_item.dart';
 
 class DrawerView extends StatefulWidget {
@@ -63,7 +58,7 @@ class _DrawerViewState extends State<DrawerView> {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.to(() => EditProfileView());
+                    // Get.to(() => EditProfileView());
                   },
                   child: DrawerItem(
                     icon: Icons.person_pin,
@@ -74,9 +69,7 @@ class _DrawerViewState extends State<DrawerView> {
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 InkWell(
-                  onTap: () {
-                    Get.to(() => OffersView());
-                  },
+                  onTap: () {},
                   child: DrawerItem(
                     icon: Icons.local_offer_outlined,
                     title: "View Offers",
@@ -86,9 +79,7 @@ class _DrawerViewState extends State<DrawerView> {
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 InkWell(
-                  onTap: () {
-                    Get.to(() => PastOwnersView());
-                  },
+                  onTap: () {},
                   child: DrawerItem(
                     icon: Icons.list_alt_outlined,
                     title: "View Past Owners",
@@ -98,9 +89,7 @@ class _DrawerViewState extends State<DrawerView> {
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 InkWell(
-                  onTap: () {
-                    Get.to(() => PastRentersView());
-                  },
+                  onTap: () {},
                   child: DrawerItem(
                     icon: Icons.supervised_user_circle_sharp,
                     title: "View Past Renters",

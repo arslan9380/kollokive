@@ -1,32 +1,18 @@
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/models/item_model.dart';
+import 'package:tajeer/app/static_info.dart';
+import 'package:tajeer/models/post_model.dart';
 import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/services/item_service.dart';
+import 'package:tajeer/services/post_service.dart';
 
 @singleton
 class HomeViewModel extends IndexTrackingViewModel with CommonUiService {
-  ItemService itemService = locator<ItemService>();
-  String selectedCat = "All";
-  List<String> itemCats = [
-    "All",
-    "Household",
-    "Electronics",
-    "Property",
-    "Vehicle",
-    "Others"
-  ];
-
-  setCat(String cat) {
-    selectedCat = cat;
-    updateLists();
-    notifyListeners();
-  }
+  PostService postService = locator<PostService>();
 
   bool loading = true;
-  List<ItemModel> allItems = [];
-  List<ItemModel> filteredItems = [];
+  List<PostModel> allPost = [];
+  String msg = "";
 
   bool isProcessing = false;
 
@@ -42,69 +28,37 @@ class HomeViewModel extends IndexTrackingViewModel with CommonUiService {
 
   initialise() async {
     setLoading(true);
-    var response = await itemService.getAllItems();
+    var response = await postService.getAllPost();
     if (response != false) {
-      allItems = response;
-      filteredItems = allItems;
+      allPost = response;
+    } else {
+      msg = "We're facing some problem.\nPlease try again later";
     }
     setLoading(false);
   }
 
-  // deleteEvent(ItemModel itemModel) async {
-  //   setProcessing(true);
-  //   var response = await itemService.deleteItem(itemModel);
-  //   setProcessing(false);
-  //   if (response != false) {
-  //     allItems.remove(ItemModel);
-  //     updateLists();
-  //     showSnackBar("Event Deleted");
-  //   } else {
-  //     showSnackBar("Please try again later");
-  //   }
-  // }
-
-  void updateLists() {
-    if (selectedCat == "All") {
-      filteredItems = allItems;
-      notifyListeners();
+  getData() async {
+    var response = await postService.getAllPost();
+    setLoading(false);
+    if (response != false) {
+      allPost = [];
+      allPost.addAll(response);
     } else {
-      filteredItems = allItems
-          .where((element) =>
-              element.category.toLowerCase() == selectedCat.toLowerCase())
-          .toList();
+      msg = "We're facing some problem.\nPlease try again later";
     }
   }
 
-  onFilter(String key) {
-    if (key != "") {
-      if (selectedCat == "All") {
-        filteredItems = allItems;
-        print("1 " + filteredItems.length.toString());
-      } else {
-        filteredItems = allItems
-            .where((element) =>
-                element.category.toLowerCase() == selectedCat.toLowerCase())
-            .toList();
-        print("2 " + filteredItems.length.toString());
-      }
-
-      filteredItems = filteredItems.where((element) {
-        print(element.title.toLowerCase().contains(key));
-        return element.title.toLowerCase().contains(key);
-      }).toList();
-      print("3 " + filteredItems.length.toString());
+  void handleLike(PostModel post) {
+    if (post.likes.contains(StaticInfo.userModel.id)) {
+      post.likes.remove(StaticInfo.userModel.id);
+      postService.likePost(post);
     } else {
-      if (selectedCat == "All") {
-        filteredItems = allItems;
-        print("4 " + filteredItems.length.toString());
-      } else {
-        filteredItems = allItems
-            .where((element) =>
-                element.category.toLowerCase() == selectedCat.toLowerCase())
-            .toList();
-        print("5 " + filteredItems.length.toString());
-      }
+      post.likes.add(StaticInfo.userModel.id);
+      postService.unlikePost(post);
     }
+
+    int index = allPost.indexWhere((element) => element.id == post.id);
+    allPost[index] = post;
     notifyListeners();
   }
 }

@@ -20,7 +20,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   TextEditingController emailCon =
       TextEditingController(text: "test@gmail.com");
-  TextEditingController passwordCon = TextEditingController(text: "12345678");
+  TextEditingController passwordCon = TextEditingController(text: "123456");
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,11 @@ class _LoginViewState extends State<LoginView> {
                               ),
                               Container(
                                   margin: EdgeInsets.symmetric(
-                                      horizontal: Get.width * 0.05),
-                                  child: Image.asset("assets/logo.png")),
+                                      horizontal: Get.width * 0.2),
+                                  child: Image.asset(
+                                    "assets/logo.png",
+                                    color: Theme.of(context).primaryColor,
+                                  )),
                               SizedBox(
                                 height: Get.height * 0.05,
                               ),
@@ -76,38 +79,6 @@ class _LoginViewState extends State<LoginView> {
                                 obscure: true,
                                 controller: passwordCon,
                               ),
-                              // SizedBox(
-                              //   height: 16,
-                              // ),
-                              // Row(
-                              //   mainAxisAlignment:
-                              //       MainAxisAlignment.spaceBetween,
-                              //   children: [
-                              //     Flexible(
-                              //       child: Row(
-                              //         children: [
-                              //           Transform.scale(
-                              //             scale: 0.7,
-                              //             child: CupertinoSwitch(
-                              //                 value: model.isRemember,
-                              //                 activeColor: Theme.of(context)
-                              //                     .primaryColor,
-                              //                 onChanged: model.setIsRemember),
-                              //           ),
-                              //           Text(
-                              //             'Remember me',
-                              //             style: TextStyle(
-                              //               color:
-                              //                   Theme.of(context).accentColor,
-                              //               fontSize: 14,
-                              //               fontWeight: FontWeight.normal,
-                              //             ),
-                              //           )
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
                               SizedBox(
                                 height: 6,
                               ),
@@ -141,7 +112,7 @@ class _LoginViewState extends State<LoginView> {
                                     'Don’t have an account?',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
+                                      color: Theme.of(context).primaryColorDark,
                                       fontSize: 14,
                                     ),
                                   ),
@@ -151,8 +122,7 @@ class _LoginViewState extends State<LoginView> {
                                       ' Register now',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color:
-                                            Theme.of(context).primaryColorDark,
+                                        color: Theme.of(context).primaryColor,
                                         fontWeight: FontWeight.w800,
                                         fontFamily:
                                             GoogleFonts.adamina().fontFamily,

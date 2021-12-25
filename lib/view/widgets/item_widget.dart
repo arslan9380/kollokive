@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tajeer/models/item_model.dart';
-import 'package:tajeer/view/ui/item_detail/item_detail.dart';
 import 'package:tajeer/view/ui/profile/profile_viewmodel.dart';
 import 'package:tajeer/view/widgets/rect_image.dart';
 
@@ -25,11 +24,7 @@ class ItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Get.to(() => ItemDetail(
-              itemModel: itemModel,
-            ));
-      },
+      onTap: () {},
       child: Container(
         width: 327,
         height: 112,
@@ -89,17 +84,7 @@ class ItemWidget extends StatelessWidget {
                         ),
                       if (isFromHide || isFromPublish)
                         PopupMenuButton(
-                          onSelected: (String value) async {
-                            if (value == "Delete") {
-                              model.deleteItem(itemModel);
-                            } else if (value == "Edit") {
-                              model.editItem(itemModel);
-                            } else if (value == "Hide") {
-                              model.hideItem(itemModel);
-                            } else if (value == "Publish") {
-                              model.publishItem(itemModel);
-                            }
-                          },
+                          onSelected: (String value) async {},
                           itemBuilder: (BuildContext context) =>
                               <PopupMenuEntry<String>>[
                             const PopupMenuItem<String>(

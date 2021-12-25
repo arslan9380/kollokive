@@ -1,50 +1,62 @@
 class UserModel {
   String id;
-  String fistName;
-  String lastName;
-  String phone;
   String email;
-  String image;
-  String rating;
-  String publishedItems;
-  String hideItems;
+  String school;
+  String city;
+  String degree;
+  String fieldOfStudy;
+  String semester;
+  String imageUrl;
+  String name;
+  String age;
+  String bio;
+  List<String> subjects = [];
 
   UserModel(
       {this.id,
-      this.fistName,
-      this.lastName,
-      this.phone,
+      this.bio,
       this.email,
-      this.image,
-      this.rating,
-      this.publishedItems,
-      this.hideItems});
+      this.school,
+      this.city,
+      this.degree,
+      this.fieldOfStudy,
+      this.semester,
+      this.imageUrl,
+      this.name,
+      this.age,
+      this.subjects});
 
   Map<String, dynamic> toMap() {
     return {
       'id': this.id,
-      'fistName': this.fistName,
-      'lastName': this.lastName,
-      'phone': this.phone,
+      'bio': this.bio,
       'email': this.email,
-      'image': this.image,
-      'rating': this.rating,
-      'publishedItems': this.publishedItems,
-      'hideItems': this.hideItems,
+      'school': this.school,
+      'city': this.city,
+      'degree': this.degree,
+      'fieldOfStudy': this.fieldOfStudy,
+      'semester': this.semester,
+      'imageUrl': this.imageUrl,
+      'name': this.name,
+      'age': this.age,
+      'subjects': this.subjects,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       id: map['id'] as String,
-      fistName: map['fistName'] as String,
-      lastName: map['lastName'] as String,
-      phone: map['phone'] as String,
+      bio: map['bio'],
       email: map['email'] as String,
-      image: map['image'] as String,
-      rating: map['rating'] as String,
-      publishedItems: map['publishedItems'] as String,
-      hideItems: map['hideItems'] as String,
+      school: map['school'] as String,
+      city: map['city'] as String,
+      degree: map['degree'] as String,
+      fieldOfStudy: map['fieldOfStudy'] as String,
+      semester: map['semester'] as String,
+      imageUrl: map['imageUrl'] as String,
+      name: map['name'] as String,
+      age: map['age'] as String,
+      subjects: List.castFrom(map['subjects']),
     );
   }
 }

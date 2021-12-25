@@ -5,6 +5,6 @@ import 'package:tajeer/view/ui/login/login_view.dart';
 class SplashViewModel extends BaseViewModel {
   initialise() async {
     await Future.delayed(Duration(seconds: 2));
-    Get.to(LoginView());
+    Get.off(LoginView());
   }
 }

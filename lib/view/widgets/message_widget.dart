@@ -21,11 +21,14 @@ class MessageWidget extends StatelessWidget {
         actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.25,
         secondaryActions: [
-          IconSlideAction(
-            caption: 'Delete',
-            color: Colors.red,
-            icon: Icons.delete,
+          InkWell(
             onTap: onDelete,
+            child: IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: onDelete,
+            ),
           )
         ],
         child: Container(
@@ -59,7 +62,7 @@ class MessageWidget extends StatelessWidget {
                   Text(
                     chat.name,
                     style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).primaryColorDark,
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                     ),
@@ -70,7 +73,7 @@ class MessageWidget extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).primaryColorDark,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
@@ -84,7 +87,7 @@ class MessageWidget extends StatelessWidget {
                   textAlign: TextAlign.end,
                   style: TextStyle(
                     fontSize: 14,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).primaryColorDark,
                   ),
                 ),
                 date: chat.dateTime.toDate(),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tajeer/app/constants.dart';
+import 'package:tajeer/app/locator.dart';
 import 'package:tajeer/view/ui/signup/signup_viewmodel.dart';
 import 'package:tajeer/view/widgets/inputfield_widget.dart';
 
@@ -37,19 +38,22 @@ class _SignUpViewState extends State<SignUpView> {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: Get.height * 0.1,
+                            height: Get.height * 0.05,
                           ),
                           Container(
                               margin: EdgeInsets.symmetric(
-                                  horizontal: Get.width * 0.1),
-                              child: Image.asset("assets/logo.png")),
+                                  horizontal: Get.width * 0.2),
+                              child: Image.asset(
+                                "assets/logo.png",
+                                color: Theme.of(context).primaryColor,
+                              )),
                           SizedBox(
                             height: Get.height * 0.05,
                           ),
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Register',
+                              'Register Step 1/4',
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 24,
@@ -61,33 +65,9 @@ class _SignUpViewState extends State<SignUpView> {
                             height: Get.height * 0.04,
                           ),
                           InputFieldWidget(
-                            hint: "First Name",
-                            prefixIcon: Icons.person,
-                            controller: firstNameCon,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          InputFieldWidget(
-                            hint: "Last Name",
-                            prefixIcon: Icons.person,
-                            controller: lastNameCon,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          InputFieldWidget(
                             hint: "Email",
                             prefixIcon: Icons.email,
                             controller: emailCon,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          InputFieldWidget(
-                            hint: "Phone",
-                            prefixIcon: Icons.phone,
-                            controller: phoneCon,
                           ),
                           SizedBox(
                             height: 10,
@@ -112,13 +92,8 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                           InkWell(
                             onTap: () {
-                              model.signUpUser(
-                                  firstNameCon.text,
-                                  lastNameCon.text,
-                                  emailCon.text,
-                                  phoneCon.text,
-                                  passwordCon.text,
-                                  confirmPasswordCon.text);
+                              model.moveToPageTwo(emailCon.text,
+                                  passwordCon.text, confirmPasswordCon.text);
                             },
                             child: Container(
                               width: Get.width * 0.45,
@@ -129,7 +104,7 @@ class _SignUpViewState extends State<SignUpView> {
                               ),
                               child: Center(
                                 child: Text(
-                                  "REGISTER",
+                                  "Continue",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -141,7 +116,7 @@ class _SignUpViewState extends State<SignUpView> {
                             ),
                           ),
                           SizedBox(
-                            height: Get.height * 0.05,
+                            height: Get.height * 0.04,
                           ),
                           Row(
                             children: [
@@ -150,7 +125,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 'Already have an account?',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).primaryColorDark,
                                   fontSize: 14,
                                 ),
                               ),
@@ -162,7 +137,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   ' Login',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: Theme.of(context).primaryColorDark,
+                                    color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
                                   ),
@@ -184,7 +159,10 @@ class _SignUpViewState extends State<SignUpView> {
           ),
         ),
       ),
-      viewModelBuilder: () => SignUpViewModel(),
+      disposeViewModel: false,
+      initialiseSpecialViewModelsOnce: true,
+      createNewModelOnInsert: true,
+      viewModelBuilder: () => locator<SignUpViewModel>(),
     );
   }
 }

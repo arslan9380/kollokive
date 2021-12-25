@@ -15,6 +15,7 @@ Future<void> main() async {
 ///-------------------------------------------------
 ///   MyWhatsapp +923039380800
 ///   My email : mian.arslan9380@gmail.com
+///   ping me so i can add you on firebase
 ///   -----------------------------------------------
 
 class MyApp extends StatelessWidget {
@@ -27,11 +28,13 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: Color(0xfffe724c),
         accentColor: Color(0xff131212),
-        primaryColorDark: Colors.white,
+        primaryColorDark: Colors.black,
         primaryColorLight: Color(0x999796a1),
         appBarTheme: AppBarTheme(
-          color: Colors.white,
-        ),
+            color: Colors.white,
+            iconTheme: IconThemeData(
+              color: Color(0xff131212),
+            )),
         scaffoldBackgroundColor: Colors.white,
       ),
       home: SplashView(),

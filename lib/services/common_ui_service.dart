@@ -71,4 +71,8 @@ class CommonUiService {
 
     return isPublic;
   }
+
+  String uid() {
+    return DateTime.now().millisecondsSinceEpoch.toString();
+  }
 }

@@ -91,7 +91,7 @@ class MessageHelper {
         if (userData == null) continue;
         UserModel user = UserModel.fromMap(userData);
         String uid = user.id;
-        String name = user.fistName + " " + user.lastName;
+        String name = user.name;
 
         data.add(Chat(uid, name, timeStamp, newMsg, lastMsg, imageUrl));
       }
@@ -145,7 +145,7 @@ class MessageHelper {
         'key': time,
         "lastMsg": msg.msgBody,
         'NewMsg': true,
-        "imageUrl": StaticInfo.userModel.image
+        "imageUrl": StaticInfo.userModel.imageUrl
       }, SetOptions(merge: true));
     } catch (e) {
       print(e.toString());

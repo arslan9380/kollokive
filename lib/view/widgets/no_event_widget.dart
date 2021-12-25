@@ -5,7 +5,8 @@ class NoEventWidget extends StatelessWidget {
   final bool isFromCompleted;
   final String title;
 
-  NoEventWidget(this.isFromCompleted, {this.title = "Sorry! No Item yet"});
+  NoEventWidget(this.isFromCompleted,
+      {this.title = "You haven't make any post"});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,8 @@ class NoEventWidget extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 24,
-            fontFamily: "SF Pro Rounded",
+            color: Theme.of(context).primaryColorDark,
+            fontSize: 18,
             fontWeight: FontWeight.w500,
           ),
         )

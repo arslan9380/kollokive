@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tajeer/app/static_info.dart';
 import 'package:tajeer/models/message.dart';
 import 'package:tajeer/view/widgets/viewImage.dart';
@@ -60,7 +61,7 @@ class MsgSendWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Text(getTime(message.msgId).toString().substring(11, 16)),
+                    Text(getTime(message.msgId)),
                   ],
                 ),
               ),
@@ -93,8 +94,9 @@ class MsgSendWidget extends StatelessWidget {
   }
 
   getTime(String msg) {
-    var s = DateTime.fromMicrosecondsSinceEpoch(int.parse(msg)).toLocal();
-    return s;
+    DateTime date =
+        DateTime.fromMicrosecondsSinceEpoch(int.parse(msg)).toLocal();
+    return DateFormat("d MMM hh:mm a").format(date).toString();
   }
 
   Widget imageWidget(Message message) {

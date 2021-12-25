@@ -5,28 +5,26 @@ class RectImage extends StatelessWidget {
   final String imageUrl;
   final double width;
   final double height;
+  final double cornerRadius;
 
-  RectImage({this.imageUrl = "", this.width = 72.0, this.height = 92});
+  RectImage(
+      {this.imageUrl = "",
+      this.width = 72.0,
+      this.height = 92,
+      this.cornerRadius = 10});
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageUrl,
+      color: Theme.of(context).accentColor,
       imageBuilder: (context, imageProvider) => Container(
         width: width,
         height: height,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          border: Border.all(color: Theme.of(context).primaryColorDark),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0x4cd3d1d8),
-              blurRadius: 6,
-              spreadRadius: 1,
-              offset: Offset(0, 0),
-            ),
-          ],
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(cornerRadius),
           image: DecorationImage(
             image: imageProvider,
             fit: BoxFit.cover,
@@ -37,17 +35,9 @@ class RectImage extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-            color: Colors.white,
             shape: BoxShape.rectangle,
-            border: Border.all(color: Theme.of(context).primaryColorDark),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x4cd3d1d8),
-                blurRadius: 6,
-                spreadRadius: 1,
-                offset: Offset(0, 0),
-              ),
-            ],
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(cornerRadius),
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage("assets/image-loader.gif"))),
@@ -57,18 +47,10 @@ class RectImage extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
             shape: BoxShape.rectangle,
-            color: Colors.white,
-            border: Border.all(color: Theme.of(context).primaryColorDark),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x4cd3d1d8),
-                blurRadius: 6,
-                spreadRadius: 1,
-                offset: Offset(0, 0),
-              ),
-            ],
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(cornerRadius),
             image: DecorationImage(
-                fit: BoxFit.fitWidth, image: AssetImage("assets/logo.png"))),
+                fit: BoxFit.cover, image: AssetImage("assets/logo.png"))),
       ),
     );
   }

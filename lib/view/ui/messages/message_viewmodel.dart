@@ -1,3 +1,5 @@
 import 'package:stacked/stacked.dart';
 
-class MessageViewModel extends BaseViewModel {}
+class MessageViewModel extends IndexTrackingViewModel {
+  int currentTab = 0;
+}

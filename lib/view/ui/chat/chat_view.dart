@@ -10,7 +10,6 @@ import 'package:tajeer/models/chat.dart';
 import 'package:tajeer/models/item_model.dart';
 import 'package:tajeer/models/message.dart';
 import 'package:tajeer/services/message_helper.dart';
-import 'package:tajeer/view/ui/send_offer/send_offer.dart';
 import 'package:tajeer/view/widgets/icon_button.dart';
 import 'package:tajeer/view/widgets/msg_receive_widget.dart';
 import 'package:tajeer/view/widgets/msg_send_widget.dart';
@@ -66,7 +65,7 @@ class _ChatViewState extends State<ChatView> {
           title: Text(
             widget.chat.name,
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).primaryColorDark,
               fontSize: 24,
               fontWeight: FontWeight.w500,
             ),
@@ -122,7 +121,8 @@ class _ChatViewState extends State<ChatView> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(27.5),
                                 border: Border.all(
-                                    color: Theme.of(context).primaryColor)),
+                                    color:
+                                        Theme.of(context).primaryColorLight)),
                             child: Row(
                               children: [
                                 SizedBox(
@@ -137,7 +137,8 @@ class _ChatViewState extends State<ChatView> {
                                     decoration: InputDecoration(
                                       hintText: "Write a message…",
                                       hintStyle: TextStyle(
-                                        color: Theme.of(context).primaryColor,
+                                        color:
+                                            Theme.of(context).primaryColorDark,
                                         fontSize: 16,
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
@@ -148,18 +149,6 @@ class _ChatViewState extends State<ChatView> {
                                 ),
                                 SizedBox(
                                   width: 2,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.to(() => SendOffer(
-                                          chatModel: widget.chat,
-                                        ));
-                                  },
-                                  child: Icon(
-                                    Icons.offline_bolt_outlined,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 30,
-                                  ),
                                 ),
                                 SizedBox(
                                   width: 2,
@@ -197,8 +186,6 @@ class _ChatViewState extends State<ChatView> {
                                                         );
                                                         if (cropped != null)
                                                           setState(() {
-                                                            print(cropped.path);
-                                                            print("asdf");
                                                             image = true;
                                                             productImg =
                                                                 cropped.path;
@@ -255,7 +242,7 @@ class _ChatViewState extends State<ChatView> {
                                   },
                                   child: Icon(
                                     Icons.camera_alt,
-                                    color: Theme.of(context).primaryColor,
+                                    color: Theme.of(context).primaryColorDark,
                                     size: 30,
                                   ),
                                 ),
@@ -319,7 +306,7 @@ class _ChatViewState extends State<ChatView> {
         receiverUid: widget.chat.uid,
         usersUidsMerge: StaticInfo.userModel.id + widget.chat.uid,
         image: productImg != null ? true : false,
-        senderImageUrl: StaticInfo.userModel.image,
+        senderImageUrl: StaticInfo.userModel.imageUrl,
         url: productImg);
     lastMsgTime = DateTime.fromMicrosecondsSinceEpoch(
             int.parse(DateTime.now().toUtc().microsecondsSinceEpoch.toString()))

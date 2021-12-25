@@ -1,5 +1,4 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -10,40 +9,39 @@ class BottomNavBar extends StatelessWidget {
 
   final List<IconData> _bottomBarIcons = [
     Icons.home_outlined,
-    Icons.chat_outlined,
-    Icons.favorite_border,
-    Icons.person_outline,
+    Icons.group_sharp,
+    Icons.notifications,
+    Icons.chat,
   ];
-  final List<String> _iconsName = ["Home", "Chat", "Wishlist", "Profile"];
+  final List<String> _iconsName = ["Home", "Friends", "Notification", "Chat"];
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBottomNavigationBar.builder(
         itemCount: _bottomBarIcons.length,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.white,
         tabBuilder: (int index, bool isActive) {
-          final color =
-              isActive ? Theme.of(context).primaryColorDark : Colors.white;
+          final color = isActive ? Theme.of(context).primaryColor : Colors.grey;
           return Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 _bottomBarIcons[index],
-                size: 24,
+                size: 28,
                 color: color,
               ),
-              const SizedBox(height: 2),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3),
-                child: AutoSizeText(
-                  _iconsName[index],
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  presetFontSizes: [14, 8],
-                  style: TextStyle(color: color),
-                ),
-              )
+              // const SizedBox(height: 2),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 3),
+              //   child: AutoSizeText(
+              //     _iconsName[index],
+              //     maxLines: 1,
+              //     overflow: TextOverflow.ellipsis,
+              //     presetFontSizes: [14, 8],
+              //     style: TextStyle(color: color),
+              //   ),
+              // )
             ],
           );
         },

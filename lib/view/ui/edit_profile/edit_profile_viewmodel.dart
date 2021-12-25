@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
@@ -44,29 +45,59 @@ class EditProfileViewModel extends BaseViewModel {
   }
 
   Future<void> updateProfile(
-      String firstName, String lastName, String phone) async {
-    if (firstName.isEmpty || lastName.isEmpty || phone.isEmpty) {
+      String name,
+      String age,
+      String school,
+      String city,
+      String degree,
+      String fieldOfStudy,
+      String semester,
+      String bio,
+      String subject1,
+      String subject2,
+      String subject3,
+      String subject4,
+      String subject5) async {
+    if (name.isEmpty ||
+        age.isEmpty ||
+        school.isEmpty ||
+        city.isEmpty ||
+        degree.isEmpty ||
+        fieldOfStudy.isEmpty ||
+        semester.isEmpty ||
+        bio.isEmpty ||
+        subject1.isEmpty ||
+        subject2.isEmpty ||
+        subject3.isEmpty ||
+        subject4.isEmpty ||
+        subject5.isEmpty) {
       commonUiService.showSnackBar("Please fill all the fields");
       return;
     }
     setProcesing(true);
     String imgUrl;
-    if (profileImage != "") {
+    if (profileImage != null) {
       imgUrl = await imageService.saveFiles(profileImage, "images");
     }
     UserModel userModel = UserModel(
-        id: StaticInfo.userModel.id,
-        image: imgUrl ?? StaticInfo.userModel.image,
-        email: StaticInfo.userModel.email,
-        phone: phone,
-        fistName: firstName,
-        hideItems: StaticInfo.userModel.hideItems,
-        lastName: lastName,
-        publishedItems: StaticInfo.userModel.publishedItems,
-        rating: StaticInfo.userModel.hideItems);
+      id: StaticInfo.userModel.id,
+      imageUrl: imgUrl ?? StaticInfo.userModel.imageUrl,
+      email: StaticInfo.userModel.email,
+      name: name,
+      age: age,
+      bio: bio,
+      city: city,
+      degree: degree,
+      fieldOfStudy: fieldOfStudy,
+      school: school,
+      semester: semester,
+      subjects: [subject1, subject2, subject3, subject4, subject5],
+    );
+
     await authService.saveUser(userModel);
     StaticInfo.userModel = userModel;
     setProcesing(false);
+    Get.back(result: StaticInfo.userModel);
     commonUiService.showSnackBar("Profile updated successfully");
   }
 }

@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
+import 'package:tajeer/app/locator.dart';
 import 'package:tajeer/app/static_info.dart';
 import 'package:tajeer/models/user_model.dart';
 import 'package:tajeer/view/ui/login/login_view.dart';
+
+import 'image_service.dart';
 
 class AuthStatus {
   static const String ERROR_WEAK_PASSWORD = 'weak-password';
@@ -17,19 +20,23 @@ class AuthStatus {
 @lazySingleton
 class AuthService {
   final _usersKey = 'users';
+  ImageService imageService = locator<ImageService>();
 
   Future<String> signUp(UserModel user, String password) async {
     try {
-      var authResult = await FirebaseAuth.instance
+      print(user.email);
+      print(password);
+      UserCredential authResult = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-              email: user.email, password: password);
+              email: user.email, password: password ?? 123456);
+      print(authResult.user.email);
       user.id = authResult.user.uid;
       var saveResult = await saveUser(user);
       if (saveResult != "success") return saveResult;
       StaticInfo.userModel = user;
       return "success";
-    } catch (error) {
-      print("error in SigningUp the user : ${error.code}");
+    } on FirebaseAuthException catch (error) {
+      print("error in SigningUp the user : ${error?.code}");
       return "${error.code}";
     }
   }
@@ -41,12 +48,13 @@ class AuthService {
           .signInWithEmailAndPassword(email: email, password: password);
       var response = await getUser(authResult.user.uid);
       if (response != null) {
+        StaticInfo.userModel = response;
         responseToBeReturned = "success";
       } else {
         responseToBeReturned = "fail";
       }
       return responseToBeReturned;
-    } catch (error) {
+    } on FirebaseAuthException catch (error) {
       print("Erro in logging the user : ${error?.message}//////");
       return "${error?.code}";
     }
@@ -61,6 +69,7 @@ class AuthService {
       var response = await getUser(result.uid);
       print(response);
       if (response != null) {
+        StaticInfo.userModel = response;
         responseToBerReturned = true;
       } else {
         print("returning fill details");
@@ -89,6 +98,11 @@ class AuthService {
 
   Future<String> saveUser(UserModel user) async {
     try {
+      if (!user.imageUrl.contains("http")) {
+        String url = await imageService.saveFiles(user.imageUrl, "Images");
+        if (url == null) return "fail";
+        user.imageUrl = url;
+      }
       await FirebaseFirestore.instance
           .collection(_usersKey)
           .doc(user.id)
@@ -103,12 +117,12 @@ class AuthService {
 
   Future<dynamic> getUser(String uid) async {
     try {
-      StaticInfo.userModel = UserModel.fromMap((await FirebaseFirestore.instance
+      UserModel user = UserModel.fromMap((await FirebaseFirestore.instance
               .collection(_usersKey)
               .doc(uid)
               .get())
           .data());
-      return StaticInfo.userModel;
+      return user;
     } catch (e) {
       print("Error in assigning static info :$e");
       return e;
