@@ -37,7 +37,10 @@ class PostService {
   Future getAllPost() async {
     List<PostModel> allPost = [];
     try {
-      var result = await FirebaseFirestore.instance.collection(_postKey).get();
+      var result = await FirebaseFirestore.instance
+          .collection(_postKey)
+          .orderBy("timeOfPost", descending: true)
+          .get();
       for (var doc in result.docs) {
         allPost.add(PostModel.fromMap(doc.data()));
       }
@@ -118,6 +121,19 @@ class PostService {
         "comments": FieldValue.arrayUnion([commentModel.toMap()])
       }, SetOptions(merge: true));
       return commentModel;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future addShare(PostModel post) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(_postKey)
+          .doc(post.id)
+          .set({"shares": FieldValue.increment(1)}, SetOptions(merge: true));
+      return post;
     } catch (e) {
       print(e);
       return false;

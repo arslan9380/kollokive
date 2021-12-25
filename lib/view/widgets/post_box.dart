@@ -259,62 +259,79 @@ class _PostBoxState extends State<PostBox> with SingleTickerProviderStateMixin {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      widget.model.handleLike(widget.post);
-                    },
-                    child: Icon(
+              InkWell(
+                onTap: () {
+                  widget.model.handleLike(widget.post);
+                },
+                child: Row(
+                  children: [
+                    Icon(
                       Icons.thumb_up,
                       color: widget.post.likes.contains(StaticInfo.userModel.id)
                           ? Theme.of(context).primaryColor
                           : Theme.of(context).accentColor,
                     ),
-                  ),
-                  SizedBox(
-                    width: 6,
-                  ),
-                  Text(
-                    widget.post.likes.length.toString(),
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                ],
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Text(
+                      widget.post.likes.length.toString(),
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      showCommentSheet(context, widget.post);
-                    },
-                    child: Icon(
+              InkWell(
+                onTap: () {
+                  showCommentSheet(context, widget.post);
+                },
+                child: Row(
+                  children: [
+                    Icon(
                       Icons.comment_outlined,
                       color: Theme.of(context).accentColor,
                     ),
-                  ),
-                  SizedBox(
-                    width: 6,
-                  ),
-                  Text(
-                    widget.post.comments.length.toString(),
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                ],
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Text(
+                      widget.post.comments.length.toString(),
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.share,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  SizedBox(
-                    width: 6,
-                  ),
-                  Text(
-                    widget.post.shares.toString(),
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                ],
+              InkWell(
+                onTap: () {
+                  Get.defaultDialog(
+                      title: "Are you sure you want to Share this Post?",
+                      middleText: "",
+                      buttonColor: Theme.of(context).primaryColor,
+                      confirmTextColor: Colors.white,
+                      onCancel: () {
+                        Get.back();
+                      },
+                      textConfirm: "  Share  ",
+                      onConfirm: () {
+                        Get.back();
+                        widget.model.sharePost(widget.post);
+                      });
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.share,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Text(
+                      widget.post.shares.toString(),
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
               ),
             ],
           )

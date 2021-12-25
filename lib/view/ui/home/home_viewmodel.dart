@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tajeer/app/locator.dart';
@@ -60,5 +61,26 @@ class HomeViewModel extends IndexTrackingViewModel with CommonUiService {
     int index = allPost.indexWhere((element) => element.id == post.id);
     allPost[index] = post;
     notifyListeners();
+  }
+
+  Future<void> sharePost(PostModel post) async {
+    setProcessing(true);
+    await postService.addShare(post);
+    PostModel postModel = PostModel.fromMap(post.toMap());
+    postModel.id = uid();
+    postModel.comments = [];
+    postModel.likes = [];
+    postModel.shares = 0;
+    postModel.sharedOf = post.userModel;
+    postModel.timeOfPost = Timestamp.now();
+    postModel.userModel = StaticInfo.userModel;
+    var response = await postService.addPost(postModel);
+    setProcessing(false);
+    if (response != false) {
+      allPost.insert(0, post);
+      notifyListeners();
+    } else {
+      showSnackBar("Please try again later");
+    }
   }
 }
