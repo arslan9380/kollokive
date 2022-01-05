@@ -2,11 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/group_model.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/view/ui/group_memebers/memebers_view.dart';
-import 'package:tajeer/view/widgets/round_image.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/group_model.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/view/ui/group_memebers/memebers_view.dart';
+import 'package:kollokvie/view/widgets/round_image.dart';
 import 'package:timeago_flutter/timeago_flutter.dart';
 
 class GroupWidget extends StatelessWidget {
@@ -28,9 +28,15 @@ class GroupWidget extends StatelessWidget {
           InkWell(
             onTap: onDelete,
             child: IconSlideAction(
-              caption: 'Remove',
-              color: Colors.red,
-              icon: Icons.delete,
+              caption: groupModel.adminId == StaticInfo.userModel.value.id
+                  ? "Delete"
+                  : 'Leave',
+              color: groupModel.adminId == StaticInfo.userModel.value.id
+                  ? Colors.red
+                  : Colors.yellow,
+              icon: groupModel.adminId == StaticInfo.userModel.value.id
+                  ? Icons.delete
+                  : Icons.logout,
               onTap: onDelete,
               closeOnTap: true,
             ),
@@ -41,7 +47,8 @@ class GroupWidget extends StatelessWidget {
             icon: Icons.info_outline,
             onTap: () {
               List<UserModel> otherMembers = groupModel.groupMembers
-                  .skipWhile((element) => element.id == StaticInfo.userModel.id)
+                  .skipWhile(
+                      (element) => element.id == StaticInfo.userModel.value.id)
                   .toList();
               Get.to(() => MemebersView(groupMemebers: otherMembers));
             },

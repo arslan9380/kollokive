@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+import 'package:kollokvie/view/ui/splash/splash_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/view/ui/splash/splash_viewmodel.dart';
 
 class SplashView extends StatelessWidget {
   @override

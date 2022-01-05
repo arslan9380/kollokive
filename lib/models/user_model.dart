@@ -11,6 +11,7 @@ class UserModel {
   String age;
   String bio;
   List<String> subjects = [];
+  String fcm;
 
   UserModel(
       {this.id,
@@ -24,7 +25,8 @@ class UserModel {
       this.imageUrl,
       this.name,
       this.age,
-      this.subjects});
+      this.subjects,
+      this.fcm});
 
   Map<String, dynamic> toMap() {
     return {
@@ -40,23 +42,24 @@ class UserModel {
       'name': this.name,
       'age': this.age,
       'subjects': this.subjects,
+      'fcm': this.fcm
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] as String,
-      bio: map['bio'],
-      email: map['email'] as String,
-      school: map['school'] as String,
-      city: map['city'] as String,
-      degree: map['degree'] as String,
-      fieldOfStudy: map['fieldOfStudy'] as String,
-      semester: map['semester'] as String,
-      imageUrl: map['imageUrl'] as String,
-      name: map['name'] as String,
-      age: map['age'] as String,
-      subjects: List.castFrom(map['subjects']),
-    );
+        id: map['id'] as String,
+        bio: map['bio'],
+        email: map['email'] as String,
+        school: map['school'] as String,
+        city: map['city'] as String,
+        degree: map['degree'] as String,
+        fieldOfStudy: map['fieldOfStudy'] as String,
+        semester: map['semester'] as String,
+        imageUrl: map['imageUrl'] as String,
+        name: map['name'] as String,
+        age: map['age'] as String,
+        subjects: List.castFrom(map['subjects']),
+        fcm: map['fcm']);
   }
 }

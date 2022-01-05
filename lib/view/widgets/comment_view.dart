@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/comment_model.dart';
+import 'package:kollokvie/models/post_model.dart';
+import 'package:kollokvie/services/common_ui_service.dart';
+import 'package:kollokvie/services/post_service.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/comment_model.dart';
-import 'package:tajeer/models/post_model.dart';
-import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/services/post_service.dart';
 
 import 'comment_widget.dart';
 
@@ -201,9 +201,9 @@ class _CommentViewState extends State<CommentView> {
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         commentBody: msgCon.text,
         commentImage: commentImage,
-        commentById: StaticInfo.userModel.id,
-        commentByImage: StaticInfo.userModel.imageUrl,
-        commentByName: StaticInfo.userModel.name,
+        commentById: StaticInfo.userModel.value.id,
+        commentByImage: StaticInfo.userModel.value.imageUrl,
+        commentByName: StaticInfo.userModel.value.name,
         commentTime: Timestamp.now());
     setState(() {
       loading = true;

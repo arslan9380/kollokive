@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/post_model.dart';
+import 'package:kollokvie/services/common_ui_service.dart';
+import 'package:kollokvie/services/post_service.dart';
+import 'package:kollokvie/view/ui/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/post_model.dart';
-import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/services/post_service.dart';
-import 'package:tajeer/view/ui/home/home_viewmodel.dart';
 
 class NewPostViewModel extends BaseViewModel with CommonUiService {
   String postImage;
@@ -56,19 +56,19 @@ class NewPostViewModel extends BaseViewModel with CommonUiService {
     PostModel postModel = PostModel(
       id: uid(),
       imageUrl: postImage,
-      authorId: StaticInfo.userModel.id,
+      authorId: StaticInfo.userModel.value.id,
       comments: [],
       likes: [],
       postDescription: description,
       shares: 0,
       subject: subject,
       timeOfPost: Timestamp.now(),
-      userModel: StaticInfo.userModel,
+      userModel: StaticInfo.userModel.value,
     );
     var response = await postService.addPost(postModel);
     setLoading(false);
     if (response != false) {
-      locator<HomeViewModel>().allPost.add(response);
+      locator<HomeViewModel>().allPost.insert(0, response);
       // locator<HomeViewModel>().setLoading(false);
       Get.back();
       showSnackBar("Post added successfullly");

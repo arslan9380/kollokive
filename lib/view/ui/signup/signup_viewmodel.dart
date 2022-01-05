@@ -2,16 +2,16 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/services/auth_service.dart';
+import 'package:kollokvie/services/common_ui_service.dart';
+import 'package:kollokvie/view/ui/signup/pages/page_four.dart';
+import 'package:kollokvie/view/ui/signup/pages/page_three.dart';
+import 'package:kollokvie/view/ui/signup/pages/page_two.dart';
+import 'package:kollokvie/view/ui/signup/pages/summary_view.dart';
+import 'package:kollokvie/view/ui/user_home/user_home_view.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/services/auth_service.dart';
-import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/view/ui/signup/pages/page_four.dart';
-import 'package:tajeer/view/ui/signup/pages/page_three.dart';
-import 'package:tajeer/view/ui/signup/pages/page_two.dart';
-import 'package:tajeer/view/ui/signup/pages/summary_view.dart';
-import 'package:tajeer/view/ui/user_home/user_home_view.dart';
 
 @singleton
 class SignUpViewModel extends IndexTrackingViewModel {

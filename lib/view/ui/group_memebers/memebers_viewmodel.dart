@@ -1,10 +1,10 @@
 import 'package:injectable/injectable.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/services/common_ui_service.dart';
+import 'package:kollokvie/services/friend_service.dart';
+import 'package:kollokvie/services/post_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/services/friend_service.dart';
-import 'package:tajeer/services/post_service.dart';
 
 @singleton
 class MemebersViewModel extends IndexTrackingViewModel with CommonUiService {
@@ -38,14 +38,15 @@ class MemebersViewModel extends IndexTrackingViewModel with CommonUiService {
     setLoading(false);
   }
 
-  removeFriend(UserModel userModel) async {
-    setLoading(true);
-    var response = await friendService.removeFriend(userModel);
-    if (response != false) {
-      allFriends.remove(userModel);
-    } else {
-      msg = "We're facing some problem.\nPlease try again later";
-    }
-    setLoading(false);
-  }
+  // removeFriend(UserModel userModel) async {
+  //   setLoading(true);
+  //
+  //   var response = await friendService.removeFriend(userModel);
+  //   if (response != false) {
+  //     allFriends.remove(userModel);
+  //   } else {
+  //     msg = "We're facing some problem.\nPlease try again later";
+  //   }
+  //   setLoading(false);
+  // }
 }

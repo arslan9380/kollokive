@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tajeer/models/user_model.dart';
+import 'package:kollokvie/models/user_model.dart';
 
 class GroupModel {
   String admin;

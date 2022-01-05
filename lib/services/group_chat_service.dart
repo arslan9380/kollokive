@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/group_model.dart';
-import 'package:tajeer/models/message.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/services/image_service.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/group_model.dart';
+import 'package:kollokvie/models/message.dart';
+import 'package:kollokvie/models/notification_model.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/services/image_service.dart';
+import 'package:kollokvie/services/notification_service.dart';
 
 @lazySingleton
 class GroupChatService {
@@ -62,7 +64,7 @@ class GroupChatService {
   _readMyGroupsData() {
     _groupsSubscription = FirebaseFirestore.instance
         .collection(_groupsCollection)
-        .where("memebers", arrayContains: StaticInfo.userModel.id)
+        .where("memebers", arrayContains: StaticInfo.userModel.value.id)
         .snapshots()
         .listen((event) async {
       List<GroupModel> allGroups = [];
@@ -93,7 +95,7 @@ class GroupChatService {
           .set({
         "lastMessageTime": Timestamp.fromDate(time),
         "recentMessage": msg.msgBody,
-        "recentMessageSender": StaticInfo.userModel.name,
+        "recentMessageSender": StaticInfo.userModel.value.name,
         "recentMessageTime": DateTime.now().toString()
       }, SetOptions(merge: true));
     } catch (e) {
@@ -133,7 +135,7 @@ class GroupChatService {
       // String group = groupModel.groupId;
       // await FirebaseFirestore.instance
       //     .collection('users')
-      //     .doc(StaticInfo.userModel.id)
+      //     .doc(StaticInfo.userModel.value.id)
       //     .set({
       //   'groups': FieldValue.arrayUnion([group])
       // }, SetOptions(merge: true));
@@ -155,11 +157,11 @@ class GroupChatService {
     //
     // await groupDocRef.update({
     //   'members':
-    //   FieldValue.arrayUnion([StaticInfo.userModel.id + '_' + userName]),
+    //   FieldValue.arrayUnion([StaticInfo.userModel.value.id + '_' + userName]),
     //   'groupId': groupDocRef.id
     // });
     //
-    // DocumentReference userDocRef = userCollection.doc(StaticInfo.userModel.id);
+    // DocumentReference userDocRef = userCollection.doc(StaticInfo.userModel.value.id);
     // return await userDocRef.update({
     //   'groups': FieldValue.arrayUnion([groupDocRef.id + '_' + groupName])
     // });
@@ -167,7 +169,7 @@ class GroupChatService {
 
   Future leaveGroup(GroupModel groupModel) async {
     try {
-      if (groupModel.adminId == StaticInfo.userModel.id) {
+      if (groupModel.adminId == StaticInfo.userModel.value.id) {
         await FirebaseFirestore.instance
             .collection(_groupsCollection)
             .doc(groupModel.groupId)
@@ -184,9 +186,24 @@ class GroupChatService {
           }
         });
       } else {
-        groupModel.memebers.remove(StaticInfo.userModel.id);
-        groupModel.groupMembers
-            .removeWhere((element) => element.id == StaticInfo.userModel.id);
+        groupModel.memebers.remove(StaticInfo.userModel.value.id);
+        groupModel.groupMembers.removeWhere(
+            (element) => element.id == StaticInfo.userModel.value.id);
+        groupModel.groupMembers.forEach((element) {
+          String title = "Leave Group";
+          String body =
+              "${StaticInfo.userModel.value.name} leave a group ${groupModel.groupName}";
+          locator<NotificationService>()
+              .sendNotification(element.fcm, body, title);
+          NotificationModel notificationModel = NotificationModel(
+              id: DateTime.now().millisecondsSinceEpoch.toString(),
+              notificationBody: body,
+              notificationTitle: title,
+              notificationTime: Timestamp.now(),
+              sentBy: StaticInfo.userModel.value.id,
+              sentTo: element.id);
+          locator<NotificationService>().addNotification(notificationModel);
+        });
 
         await FirebaseFirestore.instance
             .collection(_groupsCollection)
@@ -204,10 +221,11 @@ class GroupChatService {
   Future getMyGroups() async {
     try {
       List<GroupModel> myGroups = [];
-      print(StaticInfo.userModel.id);
+      print(StaticInfo.userModel.value.id);
       var result = await FirebaseFirestore.instance
           .collection(_groupsCollection)
-          .where("memebers", arrayContainsAny: [StaticInfo.userModel.id]).get();
+          .where("memebers",
+              arrayContainsAny: [StaticInfo.userModel.value.id]).get();
       for (var doc in result.docs) {
         myGroups.add(GroupModel.fromMap(doc.data()));
       }
@@ -228,6 +246,34 @@ class GroupChatService {
         'memebers': FieldValue.arrayUnion([userModel.id]),
         'groupMembers': FieldValue.arrayUnion([userModel.toMap()])
       }, SetOptions(merge: true));
+      groupModel.groupMembers.forEach((element) {
+        String title = "Join Group";
+        String body = "${userModel.name} join a group ${groupModel.groupName}";
+        locator<NotificationService>()
+            .sendNotification(element.fcm, body, title);
+        NotificationModel notificationModel = NotificationModel(
+            id: DateTime.now().millisecondsSinceEpoch.toString(),
+            notificationBody: body,
+            notificationTitle: title,
+            notificationTime: Timestamp.now(),
+            sentBy: StaticInfo.userModel.value.id,
+            sentTo: element.id);
+        locator<NotificationService>().addNotification(notificationModel);
+      });
+
+      String title = "Add in Group";
+      String body =
+          "${StaticInfo.userModel.value.name} add you in ${groupModel.groupName} group";
+      locator<NotificationService>()
+          .sendNotification(userModel.fcm, body, title);
+      NotificationModel notificationModel = NotificationModel(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          notificationBody: body,
+          notificationTitle: title,
+          notificationTime: Timestamp.now(),
+          sentBy: StaticInfo.userModel.value.id,
+          sentTo: userModel.id);
+      locator<NotificationService>().addNotification(notificationModel);
       return true;
     } catch (e) {
       print("error in adding user");
@@ -241,7 +287,8 @@ class GroupChatService {
   // toggling the user group join
   Future togglingGroupJoin(
       String groupId, String groupName, String userName) async {
-    DocumentReference userDocRef = userCollection.doc(StaticInfo.userModel.id);
+    DocumentReference userDocRef =
+        userCollection.doc(StaticInfo.userModel.value.id);
     DocumentSnapshot userDocumentSnapshot = await userDocRef.get();
 
     DocumentReference groupDocRef = groupCollection.doc(groupId);
@@ -255,8 +302,8 @@ class GroupChatService {
       });
 
       await groupDocRef.update({
-        'members':
-            FieldValue.arrayRemove([StaticInfo.userModel.id + '_' + userName])
+        'members': FieldValue.arrayRemove(
+            [StaticInfo.userModel.value.id + '_' + userName])
       });
     } else {
       //print('nay');
@@ -265,8 +312,8 @@ class GroupChatService {
       });
 
       await groupDocRef.update({
-        'members':
-            FieldValue.arrayUnion([StaticInfo.userModel.id + '_' + userName])
+        'members': FieldValue.arrayUnion(
+            [StaticInfo.userModel.value.id + '_' + userName])
       });
     }
   }
@@ -274,7 +321,8 @@ class GroupChatService {
   // has user joined the group
   Future<bool> isUserJoined(
       String groupId, String groupName, String userName) async {
-    DocumentReference userDocRef = userCollection.doc(StaticInfo.userModel.id);
+    DocumentReference userDocRef =
+        userCollection.doc(StaticInfo.userModel.value.id);
     DocumentSnapshot userDocSnapshot = await userDocRef.get();
     Map<String, dynamic> data = userDocSnapshot.data() as Map<String, dynamic>;
     List<dynamic> groups = data['groups'];
@@ -297,7 +345,7 @@ class GroupChatService {
   Future getUserGroups() async {
     return FirebaseFirestore.instance
         .collection("users")
-        .doc(StaticInfo.userModel.id)
+        .doc(StaticInfo.userModel.value.id)
         .snapshots();
   }
 

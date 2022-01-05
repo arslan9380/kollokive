@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:tajeer/models/chat.dart';
-import 'package:tajeer/view/widgets/round_image.dart';
+import 'package:kollokvie/models/chat.dart';
+import 'package:kollokvie/view/widgets/round_image.dart';
 import 'package:timeago_flutter/timeago_flutter.dart';
 
 class MessageWidget extends StatelessWidget {
@@ -77,7 +77,7 @@ class MessageWidget extends StatelessWidget {
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
-                  )
+                  ),
                 ],
               ),
               Spacer(),

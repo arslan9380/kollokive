@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/message.dart';
-import 'package:tajeer/view/widgets/viewImage.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/message.dart';
+import 'package:kollokvie/view/widgets/viewImage.dart';
 
 class MsgSendWidget extends StatelessWidget {
   final Message message;
@@ -29,9 +29,10 @@ class MsgSendWidget extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         border: Border.all(
-                          color: message.senderUid != StaticInfo.userModel.id
-                              ? Theme.of(context).primaryColor
-                              : Theme.of(context).accentColor,
+                          color:
+                              message.senderUid != StaticInfo.userModel.value.id
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).accentColor,
                           width: 2,
                         ),
                       ),

@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kollokvie/app/constants.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/chat.dart';
+import 'package:kollokvie/models/group_model.dart';
+import 'package:kollokvie/services/auth_service.dart';
+import 'package:kollokvie/services/group_chat_service.dart';
+import 'package:kollokvie/services/message_helper.dart';
+import 'package:kollokvie/view/ui/chat/chat_view.dart';
+import 'package:kollokvie/view/ui/create_group/create_group_view.dart';
+import 'package:kollokvie/view/ui/group_chat/group_chat_view.dart';
+import 'package:kollokvie/view/widgets/group_widget.dart';
+import 'package:kollokvie/view/widgets/message_widget.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/constants.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/chat.dart';
-import 'package:tajeer/models/group_model.dart';
-import 'package:tajeer/services/auth_service.dart';
-import 'package:tajeer/services/group_chat_service.dart';
-import 'package:tajeer/services/message_helper.dart';
-import 'package:tajeer/view/ui/chat/chat_view.dart';
-import 'package:tajeer/view/ui/create_group/create_group_view.dart';
-import 'package:tajeer/view/ui/group_chat/group_chat_view.dart';
-import 'package:tajeer/view/widgets/group_widget.dart';
-import 'package:tajeer/view/widgets/message_widget.dart';
 
 import 'message_viewmodel.dart';
 
@@ -50,8 +50,8 @@ class _MessageViewState extends State<MessageView> {
         chats.sort((b, a) => a.dateTime.compareTo(b.dateTime));
       });
     });
-    _email = StaticInfo.userModel.email;
-    _userName = StaticInfo.userModel.name;
+    _email = StaticInfo.userModel.value.email;
+    _userName = StaticInfo.userModel.value.name;
     groupChatService = GroupChatService.withGroupStreamInitialized();
     groupChatService.groupsStream.listen((updatedGroups) {
       setState(() {

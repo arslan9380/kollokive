@@ -4,14 +4,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/post_model.dart';
+import 'package:kollokvie/view/ui/home/home_viewmodel.dart';
+import 'package:kollokvie/view/ui/profile/profile_view.dart';
+import 'package:kollokvie/view/widgets/round_image.dart';
+import 'package:kollokvie/view/widgets/viewImage.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:readmore/readmore.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/post_model.dart';
-import 'package:tajeer/view/ui/home/home_viewmodel.dart';
-import 'package:tajeer/view/ui/profile/profile_view.dart';
-import 'package:tajeer/view/widgets/round_image.dart';
-import 'package:tajeer/view/widgets/viewImage.dart';
 import 'package:timeago_flutter/timeago_flutter.dart';
 
 import 'comment_view.dart';
@@ -267,7 +267,8 @@ class _PostBoxState extends State<PostBox> with SingleTickerProviderStateMixin {
                   children: [
                     Icon(
                       Icons.thumb_up,
-                      color: widget.post.likes.contains(StaticInfo.userModel.id)
+                      color: widget.post.likes
+                              .contains(StaticInfo.userModel.value.id)
                           ? Theme.of(context).primaryColor
                           : Theme.of(context).accentColor,
                     ),

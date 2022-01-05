@@ -2,20 +2,27 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tajeer/models/chat.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/view/ui/chat/chat_view.dart';
-import 'package:tajeer/view/ui/friends/friends_viewmodel.dart';
-import 'package:tajeer/view/ui/my_groups/my_groups_view.dart';
-import 'package:tajeer/view/ui/profile/profile_view.dart';
-import 'package:tajeer/view/widgets/round_image.dart';
+import 'package:kollokvie/models/chat.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/view/ui/chat/chat_view.dart';
+import 'package:kollokvie/view/ui/friends/friends_viewmodel.dart';
+import 'package:kollokvie/view/ui/my_groups/my_groups_view.dart';
+import 'package:kollokvie/view/ui/profile/profile_view.dart';
+import 'package:kollokvie/view/widgets/round_image.dart';
 
 class FriendWidget extends StatelessWidget {
   final UserModel userModel;
   final FriendsViewModel model;
   final bool showMenu;
+  final bool showAddFriendButton;
+  final Function addFriend;
 
-  FriendWidget({@required this.userModel, this.model, this.showMenu = true});
+  FriendWidget(
+      {@required this.userModel,
+      this.model,
+      this.showMenu = true,
+      this.showAddFriendButton = false,
+      this.addFriend});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +30,7 @@ class FriendWidget extends StatelessWidget {
       onTap: () {
         Get.to(() => ProfileView(
               userId: userModel.id,
+              viewOnly: true,
             ));
       },
       child: Container(
@@ -38,7 +46,7 @@ class FriendWidget extends StatelessWidget {
                 offset: Offset(0, 0),
               ),
             ],
-            border: Border.all(color: Theme.of(context).primaryColor),
+            border: Border.all(color: Theme.of(context).primaryColorDark),
             color: Colors.white),
         child: Row(
           children: [
@@ -86,7 +94,7 @@ class FriendWidget extends StatelessWidget {
                                     user: userModel,
                                   ));
                             } else if (value == 'Remove friend') {
-                              model.removeFriend(userModel);
+                              // model.removeFriend(userModel);
                             }
                           },
                           itemBuilder: (BuildContext context) =>
@@ -105,6 +113,15 @@ class FriendWidget extends StatelessWidget {
                             ),
                           ],
                           child: Icon(Icons.more_horiz),
+                        ),
+                      if (showAddFriendButton)
+                        GestureDetector(
+                          onTap: addFriend,
+                          child: Icon(
+                            Icons.add_circle,
+                            size: 28,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         )
                     ],
                   ),

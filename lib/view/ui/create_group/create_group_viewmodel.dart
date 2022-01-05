@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/group_model.dart';
+import 'package:kollokvie/services/common_ui_service.dart';
+import 'package:kollokvie/services/group_chat_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/group_model.dart';
-import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/services/group_chat_service.dart';
 
 class CreateGroupViewModel extends BaseViewModel {
   String itemImage = "";
@@ -57,14 +57,14 @@ class CreateGroupViewModel extends BaseViewModel {
         groupId: DateTime.now().millisecondsSinceEpoch.toString(),
         groupIcon: itemImage,
         groupName: title,
-        admin: StaticInfo.userModel.name,
-        adminId: StaticInfo.userModel.id,
-        memebers: [StaticInfo.userModel.id],
+        admin: StaticInfo.userModel.value.name,
+        adminId: StaticInfo.userModel.value.id,
+        memebers: [StaticInfo.userModel.value.id],
         lastMessageTime: Timestamp.now(),
         recentMessage: "",
         recentMessageSender: "",
         recentMessageTime: "",
-        groupMembers: [StaticInfo.userModel]);
+        groupMembers: [StaticInfo.userModel.value]);
 
     setLoading(true);
     var result = await groupChatService.createMyGroup(groupModel);

@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kollokvie/app/constants.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/chat.dart';
+import 'package:kollokvie/models/item_model.dart';
+import 'package:kollokvie/models/message.dart';
+import 'package:kollokvie/services/message_helper.dart';
+import 'package:kollokvie/view/widgets/icon_button.dart';
+import 'package:kollokvie/view/widgets/msg_receive_widget.dart';
+import 'package:kollokvie/view/widgets/msg_send_widget.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/constants.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/chat.dart';
-import 'package:tajeer/models/item_model.dart';
-import 'package:tajeer/models/message.dart';
-import 'package:tajeer/services/message_helper.dart';
-import 'package:tajeer/view/widgets/icon_button.dart';
-import 'package:tajeer/view/widgets/msg_receive_widget.dart';
-import 'package:tajeer/view/widgets/msg_send_widget.dart';
 
 import 'chat_viewmodel.dart';
 
@@ -99,7 +99,7 @@ class _ChatViewState extends State<ChatView> {
                                   var message =
                                       messages[messages.length - 1 - index];
                                   return message.senderUid !=
-                                          StaticInfo.userModel.id
+                                          StaticInfo.userModel.value.id
                                       ? MsgReceiveWidget(
                                           message: message,
                                         )
@@ -283,7 +283,7 @@ class _ChatViewState extends State<ChatView> {
     try {
       await FirebaseFirestore.instance
           .collection("users")
-          .doc(StaticInfo.userModel.id)
+          .doc(StaticInfo.userModel.value.id)
           .collection("my_chats")
           .doc(widget.chat.uid)
           .update({"NewMsg": false});
@@ -302,11 +302,11 @@ class _ChatViewState extends State<ChatView> {
     Message message = Message(
         msgId: DateTime.now().toUtc().microsecondsSinceEpoch.toString(),
         msgBody: msgCon.text.trim(),
-        senderUid: StaticInfo.userModel.id,
+        senderUid: StaticInfo.userModel.value.id,
         receiverUid: widget.chat.uid,
-        usersUidsMerge: StaticInfo.userModel.id + widget.chat.uid,
+        usersUidsMerge: StaticInfo.userModel.value.id + widget.chat.uid,
         image: productImg != null ? true : false,
-        senderImageUrl: StaticInfo.userModel.imageUrl,
+        senderImageUrl: StaticInfo.userModel.value.imageUrl,
         url: productImg);
     lastMsgTime = DateTime.fromMicrosecondsSinceEpoch(
             int.parse(DateTime.now().toUtc().microsecondsSinceEpoch.toString()))

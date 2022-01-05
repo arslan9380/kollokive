@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:tajeer/models/comment_model.dart';
-import 'package:tajeer/view/ui/profile/profile_view.dart';
-import 'package:tajeer/view/widgets/round_image.dart';
-import 'package:tajeer/view/widgets/viewImage.dart';
+import 'package:kollokvie/models/comment_model.dart';
+import 'package:kollokvie/view/ui/profile/profile_view.dart';
+import 'package:kollokvie/view/widgets/round_image.dart';
+import 'package:kollokvie/view/widgets/viewImage.dart';
 import 'package:timeago_flutter/timeago_flutter.dart';
 
 class CommentWidget extends StatelessWidget {

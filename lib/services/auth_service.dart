@@ -2,12 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/view/ui/login/login_view.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/view/ui/login/login_view.dart';
 
 import 'image_service.dart';
+import 'notification_service.dart';
 
 class AuthStatus {
   static const String ERROR_WEAK_PASSWORD = 'weak-password';
@@ -33,7 +34,7 @@ class AuthService {
       user.id = authResult.user.uid;
       var saveResult = await saveUser(user);
       if (saveResult != "success") return saveResult;
-      StaticInfo.userModel = user;
+      StaticInfo.userModel.value = user;
       return "success";
     } on FirebaseAuthException catch (error) {
       print("error in SigningUp the user : ${error?.code}");
@@ -47,8 +48,9 @@ class AuthService {
       var authResult = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       var response = await getUser(authResult.user.uid);
+      updateFcm();
       if (response != null) {
-        StaticInfo.userModel = response;
+        StaticInfo.userModel.value = response;
         responseToBeReturned = "success";
       } else {
         responseToBeReturned = "fail";
@@ -103,6 +105,8 @@ class AuthService {
         if (url == null) return "fail";
         user.imageUrl = url;
       }
+      String fcm = await locator<NotificationService>().getFcmToken();
+      user.fcm = fcm;
       await FirebaseFirestore.instance
           .collection(_usersKey)
           .doc(user.id)
@@ -127,5 +131,31 @@ class AuthService {
       print("Error in assigning static info :$e");
       return e;
     }
+  }
+
+  getAllUser() async {
+    try {
+      List<UserModel> allUsers = [];
+      var result = await FirebaseFirestore.instance
+          .collection(_usersKey)
+          .where("id", isNotEqualTo: StaticInfo.userModel.value.id)
+          .get();
+      for (var doc in result.docs) {
+        allUsers.add(UserModel.fromMap(doc.data()));
+      }
+      return allUsers;
+    } catch (e) {
+      print("Error: $e");
+      return false;
+    }
+  }
+
+  Future updateFcm() async {
+    String fcm = await locator<NotificationService>().getFcmToken();
+    await FirebaseFirestore.instance
+        .collection(_usersKey)
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .set({"fcm": fcm}, SetOptions(merge: true));
+    return;
   }
 }

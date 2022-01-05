@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_editor_pro_ander/image_editor_pro_ander.dart';
+import 'package:kollokvie/models/post_model.dart';
+import 'package:kollokvie/view/ui/new_post/new_post_viewmodel.dart';
+import 'package:kollokvie/view/widgets/new_post_bottom_widget.dart';
+import 'package:kollokvie/view/widgets/new_post_image_widget.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/models/post_model.dart';
-import 'package:tajeer/view/ui/new_post/new_post_viewmodel.dart';
-import 'package:tajeer/view/widgets/new_post_bottom_widget.dart';
-import 'package:tajeer/view/widgets/new_post_image_widget.dart';
 
 class NewPost extends StatefulWidget {
   final PostModel post;

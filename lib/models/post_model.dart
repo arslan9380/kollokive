@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tajeer/models/comment_model.dart';
-import 'package:tajeer/models/user_model.dart';
+import 'package:kollokvie/models/comment_model.dart';
+import 'package:kollokvie/models/user_model.dart';
 
 class PostModel {
   String id;

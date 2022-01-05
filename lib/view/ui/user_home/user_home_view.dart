@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/view/ui/friends/friends_view.dart';
+import 'package:kollokvie/view/ui/home/home_view.dart';
+import 'package:kollokvie/view/ui/messages/message_view.dart';
+import 'package:kollokvie/view/ui/notifications/notifications_view.dart';
+import 'package:kollokvie/view/ui/profile/profile_view.dart';
+import 'package:kollokvie/view/ui/user_home/user_home_viewmodel.dart';
+import 'package:kollokvie/view/widgets/bottom_nav_bar.dart';
+import 'package:kollokvie/view/widgets/round_image.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/view/ui/drawer/drawer_view.dart';
-import 'package:tajeer/view/ui/friends/friends_view.dart';
-import 'package:tajeer/view/ui/home/home_view.dart';
-import 'package:tajeer/view/ui/messages/message_view.dart';
-import 'package:tajeer/view/ui/notifications/notifications_view.dart';
-import 'package:tajeer/view/ui/profile/profile_view.dart';
-import 'package:tajeer/view/ui/user_home/user_home_viewmodel.dart';
-import 'package:tajeer/view/widgets/bottom_nav_bar.dart';
-import 'package:tajeer/view/widgets/round_image.dart';
 
 GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -29,8 +28,10 @@ class UserHomeView extends StatelessWidget {
                   },
                   child: Container(
                     margin: EdgeInsets.all(6),
-                    child: RoundImage(
-                      imageUrl: StaticInfo.userModel.imageUrl,
+                    child: Obx(
+                      () => RoundImage(
+                        imageUrl: StaticInfo.userModel.value.imageUrl,
+                      ),
                     ),
                   ),
                 ),
@@ -66,8 +67,15 @@ class UserHomeView extends StatelessWidget {
                           )))
                 ],
               ),
-              drawer: DrawerView(),
-              body: IndexedStack(
+              body:
+                  // model.currentIndex == 0
+                  //     ? HomeView()
+                  //     : model.currentIndex == 1
+                  //         ? FriendsView()
+                  //         : model.currentIndex == 2
+                  //             ? NotificationsView()
+                  //             : MessageView(),
+                  IndexedStack(
                 index: model.currentIndex,
                 children: [
                   HomeView(),

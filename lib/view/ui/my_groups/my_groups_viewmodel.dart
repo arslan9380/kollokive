@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/models/group_model.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/services/common_ui_service.dart';
+import 'package:kollokvie/services/group_chat_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/models/group_model.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/services/group_chat_service.dart';
 
 class MyGroupsViewModel extends IndexTrackingViewModel with CommonUiService {
   GroupChatService groupChatService = locator<GroupChatService>();

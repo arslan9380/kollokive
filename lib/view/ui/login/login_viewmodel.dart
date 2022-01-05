@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/services/auth_service.dart';
+import 'package:kollokvie/services/common_ui_service.dart';
+import 'package:kollokvie/view/ui/user_home/user_home_view.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/services/auth_service.dart';
-import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/view/ui/user_home/user_home_view.dart';
 
 class LoginViewModel extends BaseViewModel {
   AuthService authService = locator<AuthService>();

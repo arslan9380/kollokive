@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kollokvie/app/locator.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tajeer/app/locator.dart';
 
 @lazySingleton
 class CommonUiService {

@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/services/auth_service.dart';
+import 'package:kollokvie/services/common_ui_service.dart';
+import 'package:kollokvie/services/image_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/services/auth_service.dart';
-import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/services/image_service.dart';
 
 class EditProfileViewModel extends BaseViewModel {
   bool isEdit = false;
@@ -80,9 +80,9 @@ class EditProfileViewModel extends BaseViewModel {
       imgUrl = await imageService.saveFiles(profileImage, "images");
     }
     UserModel userModel = UserModel(
-      id: StaticInfo.userModel.id,
-      imageUrl: imgUrl ?? StaticInfo.userModel.imageUrl,
-      email: StaticInfo.userModel.email,
+      id: StaticInfo.userModel.value.id,
+      imageUrl: imgUrl ?? StaticInfo.userModel.value.imageUrl,
+      email: StaticInfo.userModel.value.email,
       name: name,
       age: age,
       bio: bio,
@@ -95,9 +95,9 @@ class EditProfileViewModel extends BaseViewModel {
     );
 
     await authService.saveUser(userModel);
-    StaticInfo.userModel = userModel;
+    StaticInfo.userModel.value = userModel;
     setProcesing(false);
-    Get.back(result: StaticInfo.userModel);
+    Get.back(result: StaticInfo.userModel.value);
     commonUiService.showSnackBar("Profile updated successfully");
   }
 }

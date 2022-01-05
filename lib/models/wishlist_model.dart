@@ -1,4 +1,4 @@
-import 'package:tajeer/models/item_model.dart';
+import 'package:kollokvie/models/item_model.dart';
 
 class WishlistModel {
   String id;

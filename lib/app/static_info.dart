@@ -1,5 +1,6 @@
-import 'package:tajeer/models/user_model.dart';
+import 'package:get/get.dart';
+import 'package:kollokvie/models/user_model.dart';
 
 class StaticInfo {
-  static UserModel userModel = UserModel();
+  static Rx<UserModel> userModel = UserModel().obs;
 }

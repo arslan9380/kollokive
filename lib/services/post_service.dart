@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/comment_model.dart';
-import 'package:tajeer/models/item_model.dart';
-import 'package:tajeer/models/post_model.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/comment_model.dart';
+import 'package:kollokvie/models/item_model.dart';
+import 'package:kollokvie/models/post_model.dart';
 
 import 'image_service.dart';
 
@@ -85,7 +85,7 @@ class PostService {
   Future<void> likePost(PostModel post) async {
     try {
       await FirebaseFirestore.instance.collection(_postKey).doc(post.id).set({
-        "likes": FieldValue.arrayUnion([StaticInfo.userModel.id])
+        "likes": FieldValue.arrayUnion([StaticInfo.userModel.value.id])
       }, SetOptions(merge: true));
       return post;
     } catch (e) {
@@ -97,7 +97,7 @@ class PostService {
   Future<void> unlikePost(PostModel post) async {
     try {
       await FirebaseFirestore.instance.collection(_postKey).doc(post.id).set({
-        "likes": FieldValue.arrayRemove([StaticInfo.userModel.id])
+        "likes": FieldValue.arrayRemove([StaticInfo.userModel.value.id])
       }, SetOptions(merge: true));
       return post;
     } catch (e) {

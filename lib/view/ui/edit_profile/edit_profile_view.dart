@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kollokvie/app/constants.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/view/ui/edit_profile/edit_profile_viewmodel.dart';
+import 'package:kollokvie/view/widgets/icon_button.dart';
+import 'package:kollokvie/view/widgets/inputfield_widget.dart';
+import 'package:kollokvie/view/widgets/round_image.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/constants.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/view/ui/edit_profile/edit_profile_viewmodel.dart';
-import 'package:tajeer/view/widgets/icon_button.dart';
-import 'package:tajeer/view/widgets/inputfield_widget.dart';
-import 'package:tajeer/view/widgets/round_image.dart';
 
 class EditProfileView extends StatefulWidget {
   @override
@@ -115,8 +115,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                                             image: FileImage(
                                                 File(model.profileImage)))),
                                   )
-                                : (StaticInfo.userModel.imageUrl == "" ||
-                                        StaticInfo.userModel.imageUrl == null)
+                                : (StaticInfo.userModel.value.imageUrl == "" ||
+                                        StaticInfo.userModel.value.imageUrl ==
+                                            null)
                                     ? Container(
                                         height: Get.width * 0.3,
                                         width: Get.width * 0.3,
@@ -138,9 +139,12 @@ class _EditProfileViewState extends State<EditProfileView> {
                                                 image: AssetImage(
                                                     "assets/person_placeholder.png"))),
                                       )
-                                    : RoundImage(
-                                        radius: Get.width * 0.3,
-                                        imageUrl: StaticInfo.userModel.imageUrl,
+                                    : Obx(
+                                        () => RoundImage(
+                                          radius: Get.width * 0.3,
+                                          imageUrl: StaticInfo
+                                              .userModel.value.imageUrl,
+                                        ),
                                       ),
                           ),
                           SizedBox(
@@ -329,19 +333,19 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   void presetData() {
-    schoolCon.text = StaticInfo.userModel.school;
-    cityCon.text = StaticInfo.userModel.city;
-    degreeCon.text = StaticInfo.userModel.degree;
-    fieldOfStudyCon.text = StaticInfo.userModel.fieldOfStudy;
-    semesterCon.text = StaticInfo.userModel.semester;
-    nameCon.text = StaticInfo.userModel.name;
-    ageCon.text = StaticInfo.userModel.age;
-    bioCon.text = StaticInfo.userModel.bio;
+    schoolCon.text = StaticInfo.userModel.value.school;
+    cityCon.text = StaticInfo.userModel.value.city;
+    degreeCon.text = StaticInfo.userModel.value.degree;
+    fieldOfStudyCon.text = StaticInfo.userModel.value.fieldOfStudy;
+    semesterCon.text = StaticInfo.userModel.value.semester;
+    nameCon.text = StaticInfo.userModel.value.name;
+    ageCon.text = StaticInfo.userModel.value.age;
+    bioCon.text = StaticInfo.userModel.value.bio;
 
-    subject1.text = StaticInfo.userModel.subjects[0];
-    subject2.text = StaticInfo.userModel.subjects[1];
-    subject3.text = StaticInfo.userModel.subjects[2];
-    subject4.text = StaticInfo.userModel.subjects[3];
-    subject5.text = StaticInfo.userModel.subjects[4];
+    subject1.text = StaticInfo.userModel.value.subjects[0];
+    subject2.text = StaticInfo.userModel.value.subjects[1];
+    subject3.text = StaticInfo.userModel.value.subjects[2];
+    subject4.text = StaticInfo.userModel.value.subjects[3];
+    subject5.text = StaticInfo.userModel.value.subjects[4];
   }
 }

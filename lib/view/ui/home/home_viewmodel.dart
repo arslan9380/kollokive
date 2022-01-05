@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kollokvie/app/locator.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/post_model.dart';
+import 'package:kollokvie/services/common_ui_service.dart';
+import 'package:kollokvie/services/post_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/post_model.dart';
-import 'package:tajeer/services/common_ui_service.dart';
-import 'package:tajeer/services/post_service.dart';
 
 @singleton
 class HomeViewModel extends IndexTrackingViewModel with CommonUiService {
@@ -50,12 +50,12 @@ class HomeViewModel extends IndexTrackingViewModel with CommonUiService {
   }
 
   void handleLike(PostModel post) {
-    if (post.likes.contains(StaticInfo.userModel.id)) {
-      post.likes.remove(StaticInfo.userModel.id);
-      postService.likePost(post);
-    } else {
-      post.likes.add(StaticInfo.userModel.id);
+    if (post.likes.contains(StaticInfo.userModel.value.id)) {
+      post.likes.remove(StaticInfo.userModel.value.id);
       postService.unlikePost(post);
+    } else {
+      post.likes.add(StaticInfo.userModel.value.id);
+      postService.likePost(post);
     }
 
     int index = allPost.indexWhere((element) => element.id == post.id);
@@ -73,7 +73,7 @@ class HomeViewModel extends IndexTrackingViewModel with CommonUiService {
     postModel.shares = 0;
     postModel.sharedOf = post.userModel;
     postModel.timeOfPost = Timestamp.now();
-    postModel.userModel = StaticInfo.userModel;
+    postModel.userModel = StaticInfo.userModel.value;
     var response = await postService.addPost(postModel);
     setProcessing(false);
     if (response != false) {

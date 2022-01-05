@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/chat.dart';
-import 'package:tajeer/models/message.dart';
-import 'package:tajeer/models/user_model.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/chat.dart';
+import 'package:kollokvie/models/message.dart';
+import 'package:kollokvie/models/user_model.dart';
 
 class MessageHelper {
   final _myChats = 'my_chats';
@@ -50,8 +50,8 @@ class MessageHelper {
     _msgSubscription = FirebaseFirestore.instance
         .collection(_messages)
         .where('usersUidsMerge', whereIn: [
-          '$uid${StaticInfo.userModel.id}',
-          '${StaticInfo.userModel.id}$uid'
+          '$uid${StaticInfo.userModel.value.id}',
+          '${StaticInfo.userModel.value.id}$uid'
         ])
         .orderBy('msgId')
         .snapshots()
@@ -68,7 +68,7 @@ class MessageHelper {
   _readChatData() {
     _chatSubscription = FirebaseFirestore.instance
         .collection(_users)
-        .doc(StaticInfo.userModel.id)
+        .doc(StaticInfo.userModel.value.id)
         .collection(_myChats)
         .snapshots()
         .listen((event) async {
@@ -145,7 +145,7 @@ class MessageHelper {
         'key': time,
         "lastMsg": msg.msgBody,
         'NewMsg': true,
-        "imageUrl": StaticInfo.userModel.imageUrl
+        "imageUrl": StaticInfo.userModel.value.imageUrl
       }, SetOptions(merge: true));
     } catch (e) {
       print(e.toString());
@@ -155,15 +155,15 @@ class MessageHelper {
   deleteChat(String uid) async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(StaticInfo.userModel.id)
+        .doc(StaticInfo.userModel.value.id)
         .collection('my_chats')
         .doc(uid)
         .delete();
     await FirebaseFirestore.instance
         .collection(_messages)
         .where('usersUidsMerge', whereIn: [
-          '$uid${StaticInfo.userModel.id}',
-          '${StaticInfo.userModel.id}$uid'
+          '$uid${StaticInfo.userModel.value.id}',
+          '${StaticInfo.userModel.value.id}$uid'
         ])
         .get()
         .then((value) {

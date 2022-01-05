@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/view/widgets/round_image.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/view/widgets/round_image.dart';
 
 class ProfileCard extends StatelessWidget {
   final UserModel userModel;

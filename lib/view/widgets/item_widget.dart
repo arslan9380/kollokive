@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tajeer/models/item_model.dart';
-import 'package:tajeer/view/ui/profile/profile_viewmodel.dart';
-import 'package:tajeer/view/widgets/rect_image.dart';
+import 'package:kollokvie/models/item_model.dart';
+import 'package:kollokvie/view/ui/profile/profile_viewmodel.dart';
+import 'package:kollokvie/view/widgets/rect_image.dart';
 
 class ItemWidget extends StatelessWidget {
   final bool isFavourite;

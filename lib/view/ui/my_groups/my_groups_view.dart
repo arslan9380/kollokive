@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kollokvie/app/constants.dart';
+import 'package:kollokvie/models/user_model.dart';
+import 'package:kollokvie/view/widgets/group_widget.dart';
+import 'package:kollokvie/view/widgets/icon_button.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/constants.dart';
-import 'package:tajeer/models/user_model.dart';
-import 'package:tajeer/view/widgets/group_widget.dart';
-import 'package:tajeer/view/widgets/icon_button.dart';
 
 import 'my_groups_viewmodel.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tajeer/view/ui/new_post/new_post_viewmodel.dart';
+import 'package:kollokvie/view/ui/new_post/new_post_viewmodel.dart';
 
 class NewPostBottomWidget extends StatelessWidget {
   final NewPostViewModel model;

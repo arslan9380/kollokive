@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+import 'package:kollokvie/app/constants.dart';
+import 'package:kollokvie/view/ui/profile/profile_viewmodel.dart';
+import 'package:kollokvie/view/widgets/icon_button.dart';
+import 'package:kollokvie/view/widgets/profile_card.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/constants.dart';
-import 'package:tajeer/app/locator.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/view/ui/friends/friends_viewmodel.dart';
-import 'package:tajeer/view/ui/profile/profile_viewmodel.dart';
-import 'package:tajeer/view/widgets/icon_button.dart';
-import 'package:tajeer/view/widgets/profile_card.dart';
 
 class ProfileView extends StatelessWidget {
   final String userId;
+  final bool viewOnly;
 
-  ProfileView({this.userId});
+  ProfileView({this.userId, this.viewOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -82,123 +80,130 @@ class ProfileView extends StatelessWidget {
                   )
               ],
             ),
-            body: ModalProgressHUD(
-              inAsyncCall: model.proccesing,
-              child: model.loading
-                  ? Center(child: CircularProgressIndicator())
-                  : model.msg != ""
-                      ? Center(
-                          child: Text(
-                          model.msg,
-                          textAlign: TextAlign.center,
-                        ))
-                      : Container(
-                          margin: EdgeInsets.symmetric(
-                              vertical: vMargin, horizontal: hMargin),
-                          child: Column(
-                            children: [
-                              ProfileCard(
-                                userModel: model.userModel,
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
+            body: SingleChildScrollView(
+              child: ModalProgressHUD(
+                inAsyncCall: model.proccesing,
+                child: model.loading
+                    ? Expanded(
+                        child: Center(child: CircularProgressIndicator()))
+                    : model.msg != ""
+                        ? Expanded(
+                            child: Center(
                                 child: Text(
-                                  'Subjects',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                              model.msg,
+                              textAlign: TextAlign.center,
+                            )),
+                          )
+                        : Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: vMargin, horizontal: hMargin),
+                            child: Column(
+                              children: [
+                                ProfileCard(
+                                  userModel: model.userModel,
                                 ),
-                              ),
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: model.userModel.subjects.length,
-                                  itemBuilder: (_, index) {
-                                    return RichText(
-                                      textAlign: TextAlign.start,
-                                      text: TextSpan(
-                                          text: "${index + 1}: ",
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColorDark,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: model
-                                                  .userModel.subjects[index],
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .primaryColorDark
-                                                      .withOpacity(0.5),
-                                                  fontSize: 14),
-                                            ),
-                                          ]),
-                                    );
-                                  }),
-                              SizedBox(
-                                height: Get.height * 0.02,
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Bio',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                SizedBox(
+                                  height: 12,
                                 ),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  model.userModel.bio ?? "",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: Get.height * 0.05,
-                              ),
-                              if (StaticInfo.userModel.id != model.userModel.id)
-                                if (locator<FriendsViewModel>()
-                                    .allFriends
-                                    .where((element) =>
-                                        element.id == model.userModel.id)
-                                    .toList()
-                                    .isEmpty)
-                                  InkWell(
-                                    onTap: model.addAsFriend,
-                                    child: Container(
-                                      width: Get.width * 0.46,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(28.50),
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Add as a friend",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: 1.28,
-                                          ),
-                                        ),
-                                      ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Subjects',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                  )
-                            ],
-                          )),
+                                  ),
+                                ),
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: model.userModel.subjects.length,
+                                    itemBuilder: (_, index) {
+                                      return RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(
+                                            text: "${index + 1}: ",
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColorDark,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text: model
+                                                    .userModel.subjects[index],
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .primaryColorDark
+                                                        .withOpacity(0.5),
+                                                    fontSize: 14),
+                                              ),
+                                            ]),
+                                      );
+                                    }),
+                                SizedBox(
+                                  height: Get.height * 0.02,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Bio',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    model.userModel.bio ?? "",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: Get.height * 0.05,
+                                ),
+                                // if (StaticInfo.userModel.value.id !=
+                                //         model.userModel.id &&
+                                //     viewOnly == false)
+                                //   if (locator<FriendsViewModel>()
+                                //       .totalFriends
+                                //       .where((element) => element.friendsIds
+                                //           .contains(model.userModel.id))
+                                //       .toList()
+                                //       .isEmpty)
+                                //     InkWell(
+                                //       onTap: model.addAsFriend,
+                                //       child: Container(
+                                //         width: Get.width * 0.46,
+                                //         height: 60,
+                                //         decoration: BoxDecoration(
+                                //           borderRadius:
+                                //               BorderRadius.circular(28.50),
+                                //           color: Theme.of(context).primaryColor,
+                                //         ),
+                                //         child: Center(
+                                //           child: Text(
+                                //             "Send Request",
+                                //             style: TextStyle(
+                                //               color: Colors.white,
+                                //               fontSize: 16,
+                                //               fontWeight: FontWeight.w600,
+                                //               letterSpacing: 1.28,
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     )
+                              ],
+                            )),
+              ),
             )
 
             // Container(

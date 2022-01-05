@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kollokvie/app/constants.dart';
+import 'package:kollokvie/view/ui/forgot_password/forgot_viewmodel.dart';
+import 'package:kollokvie/view/widgets/filled_button.dart';
+import 'package:kollokvie/view/widgets/inputfield_widget.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/constants.dart';
-import 'package:tajeer/view/ui/forgot_password/forgot_viewmodel.dart';
-import 'package:tajeer/view/widgets/filled_button.dart';
-import 'package:tajeer/view/widgets/inputfield_widget.dart';
 
 class ForgotView extends StatefulWidget {
   @override

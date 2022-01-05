@@ -17,6 +17,7 @@ class InputFieldWidget extends StatefulWidget {
   final bool showPadding;
   final String label;
   final bool showDropArrow;
+  final TextAlignVertical textAlignVertical;
 
   InputFieldWidget(
       {this.focusNode,
@@ -33,7 +34,8 @@ class InputFieldWidget extends StatefulWidget {
       this.isSvg = false,
       this.showPadding = false,
       this.label,
-      this.showDropArrow = false});
+      this.showDropArrow = false,
+      this.textAlignVertical = TextAlignVertical.center});
 
   @override
   _InputFieldWidgetState createState() => _InputFieldWidgetState();
@@ -64,7 +66,7 @@ class _InputFieldWidgetState extends State<InputFieldWidget> {
       inputFormatters: widget.keyboardType == TextInputType.number
           ? [FilteringTextInputFormatter.digitsOnly]
           : null,
-      textAlignVertical: TextAlignVertical.center,
+      textAlignVertical: widget.textAlignVertical,
       obscureText: widget.obscure ? obscure : widget.obscure,
       decoration: InputDecoration(
         hintText: widget.hint,

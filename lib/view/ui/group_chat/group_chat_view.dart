@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kollokvie/app/constants.dart';
+import 'package:kollokvie/app/static_info.dart';
+import 'package:kollokvie/models/group_model.dart';
+import 'package:kollokvie/models/message.dart';
+import 'package:kollokvie/services/group_chat_service.dart';
+import 'package:kollokvie/view/ui/group_chat/group_chat_viewmodel.dart';
+import 'package:kollokvie/view/widgets/icon_button.dart';
+import 'package:kollokvie/view/widgets/msg_receive_widget.dart';
+import 'package:kollokvie/view/widgets/msg_send_widget.dart';
 import 'package:stacked/stacked.dart';
-import 'package:tajeer/app/constants.dart';
-import 'package:tajeer/app/static_info.dart';
-import 'package:tajeer/models/group_model.dart';
-import 'package:tajeer/models/message.dart';
-import 'package:tajeer/services/group_chat_service.dart';
-import 'package:tajeer/view/ui/group_chat/group_chat_viewmodel.dart';
-import 'package:tajeer/view/widgets/icon_button.dart';
-import 'package:tajeer/view/widgets/msg_receive_widget.dart';
-import 'package:tajeer/view/widgets/msg_send_widget.dart';
 
 class GroupChatView extends StatefulWidget {
   final GroupModel groupModel;
@@ -94,7 +94,7 @@ class _GroupChatViewState extends State<GroupChatView> {
                                   var message =
                                       messages[messages.length - 1 - index];
                                   return message.senderUid !=
-                                          StaticInfo.userModel.id
+                                          StaticInfo.userModel.value.id
                                       ? MsgReceiveWidget(
                                           message: message,
                                         )
@@ -280,10 +280,10 @@ class _GroupChatViewState extends State<GroupChatView> {
         msgId: DateTime.now().toLocal().millisecondsSinceEpoch.toString(),
         serverTime: FieldValue.serverTimestamp(),
         msgBody: msgCon.text.trim(),
-        senderUid: StaticInfo.userModel.id,
+        senderUid: StaticInfo.userModel.value.id,
         receiverUid: widget.groupModel.groupId,
         image: productImg != null ? true : false,
-        senderImageUrl: StaticInfo.userModel.imageUrl,
+        senderImageUrl: StaticInfo.userModel.value.imageUrl,
         url: productImg);
     lastMsgTime = DateTime.fromMicrosecondsSinceEpoch(
             int.parse(DateTime.now().toUtc().microsecondsSinceEpoch.toString()))
